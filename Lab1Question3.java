@@ -12,23 +12,24 @@ public class Lab1Question3
         input = in.nextLine();
 
         char[] testArray = {'a', 'b', 'c'};
+        //char[] testArray = {'a'};
         DoubleLinkedList<Character> linkedList;
         linkedList = new DoubleLinkedList<Character>();
 
-        for(int i = 0; i < testArray.length; i++)
+        for (int i = 0; i < testArray.length; i++)
         {
             linkedList.enqueue(testArray[i]);
         }
 
-        for(int i = 0; i < testArray.length; i++)
-        {
-            temp = linkedList.next();
-        }
-
-        for(int i = 0; i < testArray.length; i++)
+        for (int i = 0; i < testArray.length; i++)
         {
             char temp = linkedList.dequeue();
             out.print(temp);
+        }
+
+        for (char x : testArray)
+        {
+            linkedList.enqueue(x);
         }
     }
 }

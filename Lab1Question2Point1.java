@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Queue;
 
-public class Lab1Question2Point1
+public class Lab1Question2Point1  //Question 1
 {
     public static void main(String [] args)
     {
