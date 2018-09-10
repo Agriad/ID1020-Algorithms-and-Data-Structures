@@ -8,7 +8,7 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
 {
     //structure:  1-->2-->3-->null
     //where 1 is the first data entered
-    //now null<-->1<-->2<-->3<-->null
+    //now null<--1<-->2<-->3-->null
     private Node first;  //oldest node
     private Node last;  //newest node
 
@@ -76,6 +76,7 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
     {
         Item item = first.item;  //grabs item from the oldest entry
         first = first.next;  //cycles it for the next call
+        first.before = null;
 
         if (isEmpty())  //if at the end null
         {

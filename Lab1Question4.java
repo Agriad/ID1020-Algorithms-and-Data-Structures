@@ -1,21 +1,25 @@
 import java.util.Iterator;
+import static java.lang.System.out;
 
-public class Lab1Question4<Item> implements Iterable<Item>  //question 4
+public class Lab1Question4<Item> implements Iterable<Item>  //question 4 circular double linked list
 {  //circular linked list
-    //structure:  1-->2-->3-->null
-    //where 1 is the first data entered
-    private Node first = null;  //oldest node
-    private Node last = null;  //newest node
+    //structure:  null<--1<-->2<-->3-->null
+    //where 1 is first 3 is last
+    //now  4<-->1<-->2<-->3<-->4<-->1
+    //where 1 is first 4 is last
+    private Node first = null;  //first node
+    private Node last = null;  //last node
 
     class Node
     {
         Item item = null;
         Node next = null;
+        Node before = null;
     }
 
     public boolean isEmpty()  //checks, if first == null, true else false
     {
-        return (first == null);
+        return ((first == null) || (last == null));
     }
 
     @Override
@@ -38,7 +42,7 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4
         }
 
         @Override
-        public Item next() {  //TODO careful
+        public Item next() {  //TODO ALERT
             Item item = pointer.item;
             pointer = pointer.next;
             return (item);
@@ -53,44 +57,102 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4
 
         if (isEmpty())  //if this is the first ie. if first == null
         {
-            first = last;  //put this node into as first
+            first = last;//put this node into as first
+            last.before = last;
             //System.out.println("first = last");
         }
         else {
+            last.before = oldlast;
             oldlast.next = last;  //points the previous entry to the new one added
             //System.out.println("next");
         }
     }
 
-    public void addFirst(Item item)
+    public void addFirst(Item item)  //TODO CHECK
     {
         Node oldfirst = first;
         first = new Node();
         first.item = item;
-        first.next = oldfirst;
-        last.next = first;
+        first.before = last;
 
         if (isEmpty())
         {
-            first = last;
+            last = first;
+            first.next = first;
         }
         else
         {
-
+            first.next = oldfirst;
+            oldfirst.before = first;
         }
     }
 
-    public Item dequeue()
+    public Item removeLast()
     {
-        Item item = first.item;  //grabs item from the oldest entry
-        first = first.next;  //cycles it for the next call
+        Item item = last.item;  //grabs item from the oldest entry
+        last = last.before;  //cycles it for the next call
+        last.next = first;
+        first.before = last;
 
-        if (isEmpty())  //if at the end null
+        if (last == first)  //TODO CHECK
         {
             last = null;
+            first = null;
             //System.out.println("last");
         }
 
         return (item);  //returns the data inside
+    }
+
+    public Item removeFirst()
+    {
+        Item item = first.item;
+        first = first.next;
+        first.before = last;
+        last.next = first;
+
+        if (first == last)  //TODO CHECK
+        {
+            first = null;
+            last = null;
+        }
+
+        return (item);
+    }
+
+    public static void main(String [] args)
+    {
+        char testArr[] = {'a', 'b', 'c', 'd'};
+        Lab1Question4<Character> linkedList = new Lab1Question4<Character>();
+
+        out.println("Add first, add last, remove first, remove last test");
+
+        for (int x = 0; x < testArr.length; x++)
+        {
+            out.printf("adding %d", x);
+            if ((x % 2) == 0)
+            {
+                linkedList.addFirst(testArr[x]);
+            }
+            else
+            {
+                linkedList.addLast(testArr[x]);
+            }
+        }
+
+        for (int x = 0; x < testArr.length; x++)
+        {
+            out.printf("removing %d", x);
+            if ((x % 2) == 0)
+            {
+                char c = linkedList.removeLast();
+                out.print(c);
+            }
+            else
+            {
+                char c = linkedList.removeFirst();
+                out.print(c);
+            }
+        }
     }
 }
