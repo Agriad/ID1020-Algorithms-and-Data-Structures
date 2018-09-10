@@ -3,98 +3,47 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
-public class OwnStack<Item> implements Iterable<Item>  //Question 1
+public class OwnStack  //Question 2
 {
-    private Node first;  //oldest node
-    private Node last;  //newest node
+    private char arr[] = new char[10];  //the stack memory
+    private int last = -1;  //pointer of the stack
 
-    private class Node
+    public void push(char c)
     {
-        Item item;  //data storage
-        Node next;  //pointer to the next node
-        Node before;  //pointer to the previous node
+        last++;  //adds before so it doesn't cause array out of bounds exception
+        arr[last] = c;  //adds the char to the array
+        //out.println(last);
     }
 
-    public boolean isEmpty()  //checks, if first == null, true else false
+    public char pop()
     {
-        return(first == null);
-    }
-
-    public Iterator<Item> iterator()
-    {
-        return (new StackIterator());
-    }
-
-    public class StackIterator implements Iterator<Item>
-    {
-        private Node pointer = first;
-
-        @Override
-        public boolean hasNext()
+        char c = arr[last];  //grabs the char in the array
+        //out.println(last);
+        if (last > -1)  //checks if the pointer should be reduced
         {
-            return (pointer != null);
+            last--;
         }
 
-        @Override
-        public Item next()
-        {
-            Item item = pointer.item;
-            pointer = pointer.next;
-            return (item);
-        }
-    }
-
-    public void push(Item item)
-    {
-        Node oldlast = last;  //adds the last recent node to oldlast
-        last = new Node();  //makes new node for this data
-        last.item = item;  //puts data into the node
-        last.next = null;  //we point the next part of this node to null
-
-        if (isEmpty())  //if this is the first ie. if first == null
-        {
-            last.before = null;  //if the first data entry points backwards to null
-            first = last;  //put this node into as first
-            //System.out.println("first = last");
-        }
-        else
-        {
-            last.before = oldlast;  //points the new node to the older node backwards
-            oldlast.next = last;  //points the previous entry to the new one added
-            //System.out.println("next");
-        }
-    }
-
-    public Item pop()
-    {
-        Item item = last.item;  //grabs item from the oldest entry
-        if (! (first == last ))last = last.before;  //cycles it for the next call
-
-        if (isEmpty())  //if at the end null
-        {
-            first = null;
-            last = null;
-            System.out.println("last");
-        }
-
-        return (item);  //returns the data inside
+        return (c);  //returns the character
     }
 
     public String draw()
     {
-        Node pointer = first;
-        String drawing;
+        int pointer = last;  //takes in the pointer value
+        String drawing = "";
         StringBuilder sb = new StringBuilder();
 
-        while (pointer != null)
+        while (pointer != -1)  //while still in the array
         {
-            sb.append('[').append(pointer.item).append(']');
-            if (pointer.next != null)
+            sb.append('[').append(arr[pointer]).append(']');
+            if (pointer > 0)  //if at the end don't add ','
             {
-                sb.append(',');
+                sb.append(", ");
             }
+            pointer--;
         }
 
+        //sb.append(last);
         drawing = sb.toString();
 
         return (drawing);
@@ -102,9 +51,7 @@ public class OwnStack<Item> implements Iterable<Item>  //Question 1
 
     public static void main(String [] args)
     {
-        OwnStack<Character> stack;  //initialises stack as a variable of type Stack and generic Character
-        stack = new OwnStack<Character>();  //creates a stack with generic Character
-
+        OwnStack stack = new OwnStack();
         out.println("Enter input: ");
         Scanner in = new Scanner(System.in);
         String s = in.nextLine();  //takes in the next input
@@ -116,17 +63,18 @@ public class OwnStack<Item> implements Iterable<Item>  //Question 1
             stack.push(s.charAt(i));
         }
 
-        for (int i = 0; i < s.length()+1; i++)  //iterates through the stack and takes them out
+        for (int i = 0; i < s.length(); i++)  //iterates through the stack and takes them out
         {
             out.print(stack.pop());
         }
 
-
+        out.println(stack.draw());
         out.println("\nDrawing test:");
 
-        /*
+
         for (int i = 0; i < s.length(); i++)  //iterates through the input and puts them into the stack
         {
+            out.println(stack.draw());
             stack.push(s.charAt(i));
         }
 
@@ -135,6 +83,6 @@ public class OwnStack<Item> implements Iterable<Item>  //Question 1
         {
             out.println(stack.draw());
             stack.pop();
-        }*/
+        }
     }
 }

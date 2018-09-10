@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
-public class DoubleLinkedList<Item> implements Iterable<Item>  //Question 2
+public class DoubleLinkedList<Item> implements Iterable<Item>  //Question 3
 {
     //structure:  1-->2-->3-->null
     //where 1 is the first data entered
@@ -84,6 +84,27 @@ public class DoubleLinkedList<Item> implements Iterable<Item>  //Question 2
         return (item);  //returns the data inside
     }
 
+    public String draw()
+    {
+        String drawing = "";
+        Node pointer = first;
+        StringBuilder sb = new StringBuilder();
+
+        while (pointer != null)
+        {
+            sb.append('[').append(pointer.item).append(']');
+            if(pointer.next != null)
+            {
+                sb.append(", ");
+            }
+            pointer = pointer.next;
+        }
+
+        drawing = sb.toString();
+
+        return (drawing);
+    }
+
     public static void main(String[] args)
     {
         String input;
@@ -110,12 +131,29 @@ public class DoubleLinkedList<Item> implements Iterable<Item>  //Question 2
 
         out.println("\nIterator test: ");
 
-        for (char x : testArray) {
+        for (char x : testArray)
+        {
             linkedList.enqueue(x);
         }
 
-        for (char x : linkedList) {
+        for (char x : linkedList)
+        {
             out.print(x);
+            linkedList.dequeue();
+        }
+
+        out.println("\nDrawing test: ");
+
+        for (char x : testArray)
+        {
+            linkedList.enqueue(x);
+            out.println(linkedList.draw());
+        }
+
+        for (char x : linkedList)
+        {
+            out.println(linkedList.draw());
+            linkedList.dequeue();
         }
     }
 }
