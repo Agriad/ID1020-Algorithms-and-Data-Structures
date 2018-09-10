@@ -63,7 +63,8 @@ public class DoubleLinkedList<Item> implements Iterable<Item>  //Question 3
             last.before = null;  //if the first data entry points backwards to null
             first = last;  //put this node into as first
             //System.out.println("first = last");
-        } else {
+        }
+        else {
             last.before = oldlast;  //points the new node to the older node backwards
             oldlast.next = last;  //points the previous entry to the new one added
             //System.out.println("next");

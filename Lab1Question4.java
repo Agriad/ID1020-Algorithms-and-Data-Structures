@@ -44,20 +44,39 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4
             return (item);
         }
     }
-    public void enqueue(Item item)
+    public void addLast(Item item)
     {
         Node oldlast = last;  //adds the last recent node to oldlast
         last = new Node();  //makes new node for this data
         last.item = item;  //puts data into the node
-        last.next = null;  //we point the next part of this node to null
+        last.next = first;  //we point the next part of this node to null
 
         if (isEmpty())  //if this is the first ie. if first == null
         {
             first = last;  //put this node into as first
             //System.out.println("first = last");
-        } else {
+        }
+        else {
             oldlast.next = last;  //points the previous entry to the new one added
             //System.out.println("next");
+        }
+    }
+
+    public void addFirst(Item item)
+    {
+        Node oldfirst = first;
+        first = new Node();
+        first.item = item;
+        first.next = oldfirst;
+        last.next = first;
+
+        if (isEmpty())
+        {
+            first = last;
+        }
+        else
+        {
+
         }
     }
 
