@@ -1,6 +1,15 @@
 import java.util.Iterator;
 import static java.lang.System.out;
 
+/*
+README
+This is an implementation of a generic iterable circular double linked list where the data can be loaded from the start
+of the list but can be unloaded from any position.
+It has the structure:
+4<-->1<-->2<-->3<-->4<-->1
+Where 1 is first 4 is last.
+*/
+
 public class Lab1Question5<Item> implements Iterable<Item>
 {
     private Node first = null;  //first node

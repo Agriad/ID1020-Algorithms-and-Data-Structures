@@ -3,6 +3,12 @@ import java.util.Scanner;
 import static java.lang.System.out;
 import java.util.Scanner;
 
+/*
+README
+This program takes in terminal inputs and reverses them.
+As this is done by a stack implemented using a static array size the limit is 10 characters.
+*/
+
 public class Lab1Question2  //Question 2
 {
     private char arr[] = new char[10];  //the stack memory

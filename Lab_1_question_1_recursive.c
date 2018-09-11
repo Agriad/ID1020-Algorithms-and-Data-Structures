@@ -1,3 +1,8 @@
+/*
+README
+This program takes in terminal inputs and reverses them.
+As this is done in a recursive manner the limit of the input is quite large.
+*/
 #include <stdio.h>
 
 void recursive(char c)

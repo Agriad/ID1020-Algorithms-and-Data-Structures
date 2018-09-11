@@ -4,18 +4,11 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.LinkedList;
 
-/*
-README
-This is an implementation of a generic iterable FIFO queue with a double linked list with a structure of:
-null<--1<-->2<-->3-->null
-Where 3 is the newest data entered.
-*/
-
-public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
+public class Test<Item> implements Iterable<Item>  //Question 3
 {
     //structure:  1-->2-->3-->null
     //where 1 is the first data entered
-    //now null<--1<-->2<-->3-->null
+    //now null<-->1<-->2<-->3<-->null
     private Node first;  //oldest node
     private Node last;  //newest node
 
@@ -34,10 +27,10 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
     @Override
     public Iterator<Item> iterator()
     {
-        return (new Lab1Question3Iterator());
+        return (new TestIterator());
     }
 
-    private class Lab1Question3Iterator implements Iterator<Item>
+    private class TestIterator implements Iterator<Item>
     {
         private Node pointer = first;
 
@@ -51,7 +44,7 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
         }
 
         @Override
-        public Item next() {  //gives item and goes to the next node
+        public Item next() {
             Item item = pointer.item;
             pointer = pointer.next;
             return (item);
@@ -59,7 +52,7 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
     }
 
 
-    public void enqueue(Item item)  //adds the item to the "last" node and links it
+    public void enqueue(Item item)
     {
         Node oldlast = last;  //adds the last recent node to oldlast
         last = new Node();  //makes new node for this data
@@ -71,27 +64,17 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
             last.before = null;  //if the first data entry points backwards to null
             first = last;  //put this node into as first
             //System.out.println("first = last");
-        }
-        else {
+        } else {
             last.before = oldlast;  //points the new node to the older node backwards
             oldlast.next = last;  //points the previous entry to the new one added
             //System.out.println("next");
         }
     }
 
-    public Item dequeue()  //removes the node from the "first" node and returns the item
+    public Item dequeue()
     {
         Item item = first.item;  //grabs item from the oldest entry
         first = first.next;  //cycles it for the next call
-
-        if (first == last)
-        {
-            first = null;
-        }
-        else
-        {
-            first.before = null;
-        }
 
         if (isEmpty())  //if at the end null
         {
@@ -102,20 +85,20 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
         return (item);  //returns the data inside
     }
 
-    public String draw()  //makes a String interpretation of the way the data is stored
+    public String draw()
     {
         String drawing = "";
         Node pointer = first;
         StringBuilder sb = new StringBuilder();
 
-        while (pointer != null)  //if a node exist
+        while (pointer != null)
         {
-            sb.append('[').append(pointer.item).append(']');  //adds the item
+            sb.append('[').append(pointer.item).append(']');
             if(pointer.next != null)
             {
                 sb.append(", ");
             }
-            pointer = pointer.next;  //go to next node
+            pointer = pointer.next;
         }
 
         drawing = sb.toString();
@@ -132,8 +115,8 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
 
         char[] testArray = {'a', 'b', 'c'};
         //char[] testArray = {'a'};
-        Lab1Question3<Character> linkedList;
-        linkedList = new Lab1Question3<Character>();
+        Test<Character> linkedList;
+        linkedList = new Test<Character>();
         out.println("Enqueue and dequeue test: ");
 
         for (int i = 0; i < testArray.length; i++)

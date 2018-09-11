@@ -1,3 +1,8 @@
+/*
+README
+This program takes in terminal inputs and reverses them.
+As this is done by a stack implemented using a static array size the limit is 10 characters.
+*/
 #include <stdio.h>
 
 int main()

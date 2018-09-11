@@ -3,6 +3,13 @@ import java.io.FileReader;
 
 import static java.lang.System.out;
 
+/*
+README
+This is an implementation of a filter that detects if the parentheses in the input is balanced.
+Since the implementation is done with a static array size there is a limit of 100 concurrent open {[( or 100 open {[(
+that is not closed before adding another open {[(.
+*/
+
 public class Lab1Question6
 {
     private char[] charArray = new char[100];

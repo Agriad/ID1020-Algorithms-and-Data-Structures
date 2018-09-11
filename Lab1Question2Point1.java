@@ -1,6 +1,12 @@
 import static java.lang.System.out;
 import java.util.Scanner;
 
+/*
+README
+This program takes in terminal inputs and reverses them.
+As this is done in a recursive manner the limit of the input is quite large.
+*/
+
 public class Lab1Question2Point1  //Question 2
 {
     public static void main(String [] args)
