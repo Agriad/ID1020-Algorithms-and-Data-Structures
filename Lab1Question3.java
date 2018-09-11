@@ -84,15 +84,6 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
         Item item = first.item;  //grabs item from the oldest entry
         first = first.next;  //cycles it for the next call
 
-        if (first == last)
-        {
-            first = null;
-        }
-        else
-        {
-            first.before = null;
-        }
-
         if (isEmpty())  //if at the end null
         {
             last = null;

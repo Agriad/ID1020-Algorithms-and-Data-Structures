@@ -4,11 +4,18 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.LinkedList;
 
+/*
+README
+This is an implementation of a generic iterable FIFO queue with a double linked list with a structure of:
+null<--1<-->2<-->3-->null
+Where 3 is the newest data entered.
+*/
+
 public class Test<Item> implements Iterable<Item>  //Question 3
 {
     //structure:  1-->2-->3-->null
     //where 1 is the first data entered
-    //now null<-->1<-->2<-->3<-->null
+    //now null<--1<-->2<-->3-->null
     private Node first;  //oldest node
     private Node last;  //newest node
 
@@ -44,7 +51,7 @@ public class Test<Item> implements Iterable<Item>  //Question 3
         }
 
         @Override
-        public Item next() {
+        public Item next() {  //gives item and goes to the next node
             Item item = pointer.item;
             pointer = pointer.next;
             return (item);
@@ -52,7 +59,7 @@ public class Test<Item> implements Iterable<Item>  //Question 3
     }
 
 
-    public void enqueue(Item item)
+    public void enqueue(Item item)  //adds the item to the "last" node and links it
     {
         Node oldlast = last;  //adds the last recent node to oldlast
         last = new Node();  //makes new node for this data
@@ -64,14 +71,15 @@ public class Test<Item> implements Iterable<Item>  //Question 3
             last.before = null;  //if the first data entry points backwards to null
             first = last;  //put this node into as first
             //System.out.println("first = last");
-        } else {
+        }
+        else {
             last.before = oldlast;  //points the new node to the older node backwards
             oldlast.next = last;  //points the previous entry to the new one added
             //System.out.println("next");
         }
     }
 
-    public Item dequeue()
+    public Item dequeue()  //removes the node from the "first" node and returns the item
     {
         Item item = first.item;  //grabs item from the oldest entry
         first = first.next;  //cycles it for the next call
@@ -85,20 +93,20 @@ public class Test<Item> implements Iterable<Item>  //Question 3
         return (item);  //returns the data inside
     }
 
-    public String draw()
+    public String draw()  //makes a String interpretation of the way the data is stored
     {
         String drawing = "";
         Node pointer = first;
         StringBuilder sb = new StringBuilder();
 
-        while (pointer != null)
+        while (pointer != null)  //if a node exist
         {
-            sb.append('[').append(pointer.item).append(']');
+            sb.append('[').append(pointer.item).append(']');  //adds the item
             if(pointer.next != null)
             {
                 sb.append(", ");
             }
-            pointer = pointer.next;
+            pointer = pointer.next;  //go to next node
         }
 
         drawing = sb.toString();
