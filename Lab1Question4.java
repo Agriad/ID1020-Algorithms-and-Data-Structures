@@ -37,7 +37,7 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4 circula
         @Override
         public boolean hasNext()  //checks if there is a next node
         {
-            return ((pointer != first) && (counter != 0));
+            return (counter < size);
         }
 
         public void remove() {
@@ -258,8 +258,7 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4 circula
         for (char x : linkedList)
         {
             out.print(x);
-            linkedList.removeFirst();
+            //linkedList.removeFirst();
         }
-
     }
 }

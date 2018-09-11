@@ -91,8 +91,10 @@ public class Lab1Question2  //Question 2
 TODO
 1 done
 2 done
-2.1 not done (add drawing, use ADT)
+2.1 done (add drawing, use ADT)
 3 done (add iterable, add comment)
-4 not done (fix iterator)
+4 done (fix iterator)
+5 done
+6 not done
 
 */

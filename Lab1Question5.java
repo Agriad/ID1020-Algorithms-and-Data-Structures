@@ -3,22 +3,20 @@ import static java.lang.System.out;
 
 public class Lab1Question5<Item> implements Iterable<Item>
 {
-    //structure:  null<--1<-->2<-->3-->null
-    //where 3 is the first data entered
-    private Node first = null;  //newest node
-    private Node last = null;  //oldest node
-    private int size = 0;
+    private Node first = null;  //first node
+    private Node last = null;  //last node
+    private int size = 0;  //counter for the size of list
 
-    private class Node
+    class Node
     {
-        Item item = null;  //data storage
-        Node next = null;  //pointer to the next node
-        Node before = null;  //pointer to the previous node
+        Item item = null;
+        Node next = null;
+        Node before = null;
     }
 
     public boolean isEmpty()  //checks, if first == null, true else false
     {
-        return (last == null);
+        return ((first == null) || (last == null));
     }
 
     @Override
@@ -30,11 +28,12 @@ public class Lab1Question5<Item> implements Iterable<Item>
     private class Lab1Question5Iterator implements Iterator<Item>
     {
         private Node pointer = first;
+        private int counter = 0;
 
         @Override
         public boolean hasNext()  //checks if there is a next node
         {
-            return (pointer != null);
+            return (counter < size);
         }
 
         public void remove() {
@@ -44,84 +43,97 @@ public class Lab1Question5<Item> implements Iterable<Item>
         public Item next() {
             Item item = pointer.item;
             pointer = pointer.next;
+            counter++;
             return (item);
         }
     }
 
-
-    public void enqueue(Item item)
-    {
-        Node oldfirst = first;
-        first = new Node();
-        first.item = item;  //puts data into the node
-        first.before = null;  //we point the next part of this node to null
-
-        if (isEmpty())  //if this is the first ie. if first == null
-        {
-            first.next = null;  //
-            last = first;  //
-        }
-        else {
-            first.next = oldfirst;  //
-            oldfirst.before = first;  //
-        }
-        size++;
-    }
-
-    public Item remove(int position)
-    {
-        Node oldfirst = first;
-        Node oldFirstNext = null;
-        Node oldFirstBefore = null;
-        Item item = null;
-
-        if (size == 1)
-        {
-            item = first.item;
-            last = null;
-            first = null;
-            oldfirst = null;
-        }
-        else
-        {
-            for (int x = 0; x < position; x++)
-            {
-                first = first.next;
-            }
-            //might need to use x.next.next
-            item = first.item;
-            oldFirstBefore = first.before;
-            oldFirstNext = first.next;
-            oldFirstNext.next = first.next;
-            oldFirstBefore.before = first.before;
-            first.next = null;
-            first.before = null;
-            first = oldfirst;
-        }
-
-        size--;
-        return (item);  //returns the data inside
-    }
-
     public String draw()
     {
+        int counter = size;
         String drawing = "";
         Node pointer = first;
         StringBuilder sb = new StringBuilder();
 
-        while (pointer != null)
+        while (counter > 0)
         {
             sb.append('[').append(pointer.item).append(']');
-            if(pointer.next != null)
+            if((counter - 1) != 0)
             {
                 sb.append(", ");
+                //out.println("test 1");
             }
+            else
+            {
+                counter = 1;
+                //out.println("test 2");
+            }
+
+            counter--;
             pointer = pointer.next;
         }
 
         drawing = sb.toString();
 
         return (drawing);
+    }
+
+    public void enqueue(Item item)
+    {
+        Node oldfirst = first;
+        first = new Node();
+        first.item = item;
+        first.before = last;
+        size++;
+
+        if (isEmpty())
+        {
+            last = first;
+            first.next = first;
+        }
+        else
+        {
+            first.next = oldfirst;
+            oldfirst.before = first;
+        }
+    }
+
+    public Item remove(int position)
+    {
+        Item item = null;
+        Node pointer = first;
+
+        for (int x = 1; x < position; x++)
+        {
+            pointer = pointer.next;
+        }
+
+        item = pointer.item;
+
+        if (position == 1)
+        {
+            first = pointer.next;
+        }
+        else if(position == size)
+        {
+            last = pointer.before;
+        }
+
+        if (size == 1)
+        {
+            pointer.next = null;
+            pointer.before = null;
+        }
+        else
+        {
+            pointer.before.next = pointer.next;
+            pointer.next.before = pointer.before;
+            pointer.before = null;
+            pointer.next = null;
+        }
+
+        size--;
+        return (item);  //returns the data inside
     }
 
     public static void main(String [] args)
@@ -151,5 +163,32 @@ public class Lab1Question5<Item> implements Iterable<Item>
                 out.println(linkedList.remove(1));
             }
         }
+
+        out.println("Draw test: ");
+
+        for (int x = 0; x < testArr.length; x++)
+        {
+            linkedList.enqueue(testArr[x]);
+            out.println(linkedList.draw());
+        }
+
+        for (int x = 0; x < testArr.length; x++)
+        {
+            linkedList.remove(1);
+            out.println(linkedList.draw());
+        }
+
+        out.println("Iterator test: ");
+
+        for (int x = 0; x < testArr.length; x++)
+        {
+            linkedList.enqueue(testArr[x]);
+        }
+
+        for (char x : linkedList)
+        {
+            out.print(x);
+        }
+
     }
 }
