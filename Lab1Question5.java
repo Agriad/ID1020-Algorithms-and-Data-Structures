@@ -40,7 +40,7 @@ public class Lab1Question5<Item> implements Iterable<Item>
         }
 
         @Override
-        public Item next() {
+        public Item next() {  //gives item and goes to the next node
             Item item = pointer.item;
             pointer = pointer.next;
             counter++;
@@ -48,7 +48,7 @@ public class Lab1Question5<Item> implements Iterable<Item>
         }
     }
 
-    public String draw()
+    public String draw()  //makes a String interpretation of the way the data is stored
     {
         int counter = size;
         String drawing = "";
@@ -78,39 +78,39 @@ public class Lab1Question5<Item> implements Iterable<Item>
         return (drawing);
     }
 
-    public void enqueue(Item item)
+    public void enqueue(Item item)  //adds the item to the "first" node and links it
     {
-        Node oldfirst = first;
+        Node oldfirst = first;  //priming new node for the new item
         first = new Node();
         first.item = item;
         first.before = last;
         size++;
 
-        if (isEmpty())
+        if (isEmpty())  //if the first addition then point both ways to self
         {
             last = first;
             first.next = first;
         }
-        else
+        else  //points the 2 nodes to each other
         {
             first.next = oldfirst;
             oldfirst.before = first;
         }
     }
 
-    public Item remove(int position)
+    public Item remove(int position)  //removes the node from the "nth" node and returns the item
     {
         Item item = null;
         Node pointer = first;
 
-        for (int x = 1; x < position; x++)
+        for (int x = 1; x < position; x++)  //iterates to the nth position
         {
             pointer = pointer.next;
         }
 
         item = pointer.item;
 
-        if (position == 1)
+        if (position == 1)  //moves the first and last so that it works for the next call
         {
             first = pointer.next;
         }
@@ -119,12 +119,14 @@ public class Lab1Question5<Item> implements Iterable<Item>
             last = pointer.before;
         }
 
-        if (size == 1)
+        if (size == 1)  //if the only node remove the pointers
         {
             pointer.next = null;
             pointer.before = null;
+            first = null;
+            last = null;
         }
-        else
+        else  //removes the pointers from and to other nodes
         {
             pointer.before.next = pointer.next;
             pointer.next.before = pointer.before;

@@ -94,7 +94,7 @@ TODO
 2.1 done (add drawing, use ADT)
 3 done (add iterable, add comment)
 4 done (fix iterator)
-5 done
+5 done (add comment)
 6 not done
 
 */

@@ -1,8 +1,5 @@
 import static java.lang.System.out;
-
-import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.Queue;
 
 public class Lab1Question2Point1  //Question 2
 {

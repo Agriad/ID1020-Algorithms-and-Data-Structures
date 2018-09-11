@@ -44,7 +44,7 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4 circula
         }
 
         @Override
-        public Item next() {
+        public Item next() {  //gives item and goes to the next node
             Item item = pointer.item;
             pointer = pointer.next;
             counter++;
@@ -52,7 +52,7 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4 circula
         }
     }
 
-    public String draw()
+    public String draw()  //makes a String interpretation of the way the data is stored
     {
         int counter = size;
         String drawing = "";
@@ -82,7 +82,7 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4 circula
         return (drawing);
     }
 
-    public void addLast(Item item)
+    public void addLast(Item item)  //adds the item to the "last" node and links it
     {
         Node oldlast = last;  //adds the last recent node to oldlast
         last = new Node();  //makes new node for this data
@@ -103,38 +103,38 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4 circula
         }
     }
 
-    public void addFirst(Item item)
+    public void addFirst(Item item)  //adds the item to the "first" node and links it
     {
-        Node oldfirst = first;
+        Node oldfirst = first;  //priming new node for the new item
         first = new Node();
         first.item = item;
         first.before = last;
         size++;
 
-        if (isEmpty())
+        if (isEmpty())  //if the first addition then point both ways to self
         {
             last = first;
             first.next = first;
         }
-        else
+        else  //points the 2 nodes to each other
         {
             first.next = oldfirst;
             oldfirst.before = first;
         }
     }
 
-    public Item removeLast()
+    public Item removeLast()  //removes the node from the "last" node and returns the item
     {
         Item item = last.item;  //grabs item from the oldest entry
 
-        if (last == first)
+        if (last == first)  //if the last entry remove the pointers
         {
             //out.println("last first");
             last = null;
             first = null;
             //System.out.println("last");
         }
-        else
+        else  //remove the pointers from the other nodes
         {
             last = last.before;  //cycles it for the next call
             last.next = first;
@@ -145,18 +145,18 @@ public class Lab1Question4<Item> implements Iterable<Item>  //question 4 circula
         return (item);  //returns the data inside
     }
 
-    public Item removeFirst()
+    public Item removeFirst()  //removes the node from the "first" node and returns the item
     {
         Item item = first.item;
 
-        if (first == last)
+        if (first == last)  //if the last entry remove the pointers
         {
             //out.println("first last");
             first = null;
             last = null;
         }
 
-        else
+        else  //remove the pointers from the other nodes
         {
             first = first.next;
             first.before = last;

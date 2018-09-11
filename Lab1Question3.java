@@ -44,7 +44,7 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
         }
 
         @Override
-        public Item next() {
+        public Item next() {  //gives item and goes to the next node
             Item item = pointer.item;
             pointer = pointer.next;
             return (item);
@@ -52,7 +52,7 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
     }
 
 
-    public void enqueue(Item item)
+    public void enqueue(Item item)  //adds the item to the "last" node and links it
     {
         Node oldlast = last;  //adds the last recent node to oldlast
         last = new Node();  //makes new node for this data
@@ -72,7 +72,7 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
         }
     }
 
-    public Item dequeue()
+    public Item dequeue()  //removes the node from the "first" node and returns the item
     {
         Item item = first.item;  //grabs item from the oldest entry
         first = first.next;  //cycles it for the next call
@@ -87,20 +87,20 @@ public class Lab1Question3<Item> implements Iterable<Item>  //Question 3
         return (item);  //returns the data inside
     }
 
-    public String draw()
+    public String draw()  //makes a String interpretation of the way the data is stored
     {
         String drawing = "";
         Node pointer = first;
         StringBuilder sb = new StringBuilder();
 
-        while (pointer != null)
+        while (pointer != null)  //if a node exist
         {
-            sb.append('[').append(pointer.item).append(']');
+            sb.append('[').append(pointer.item).append(']');  //adds the item
             if(pointer.next != null)
             {
                 sb.append(", ");
             }
-            pointer = pointer.next;
+            pointer = pointer.next;  //go to next node
         }
 
         drawing = sb.toString();
