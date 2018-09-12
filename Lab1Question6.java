@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 import static java.lang.System.out;
@@ -22,7 +24,7 @@ public class Lab1Question6
     {
         for (int x = 0; x < s.length(); x++)  //iterates through the string a char at a time
         {
-            char c = s.charAt(x);
+            char c = s.charAt(x);  //
 
             if ((int)(c) == (int)('{'))  //checks if it is open {[(
             {
@@ -107,6 +109,7 @@ public class Lab1Question6
 
     public static void main(String [] args)
     {
+
         String test1 = "()";  //balanced
         String test2 = "{[]()(}";  //not balanced
         String test3 = "{(})";  //not balanced

@@ -9,6 +9,7 @@ README
 This is an implementation of a generic iterable FIFO queue with a double linked list with a structure of:
 null<--1<-->2<-->3-->null
 Where 3 is the newest data entered.
+The structure of the linked list is heavily inspired from the Algorithms 4th ed
 */
 
 public class Lab1Question3<Item> implements Iterable<Item>  //Question 3

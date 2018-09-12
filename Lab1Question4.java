@@ -8,6 +8,7 @@ from the start or the end of the list.
 It has the structure:
 4<-->1<-->2<-->3<-->4<-->1
 Where 1 is first 4 is last.
+The structure of the linked list is heavily inspired from the Algorithms 4th ed
 */
 
 public class Lab1Question4<Item> implements Iterable<Item>  //question 4 circular double linked list
