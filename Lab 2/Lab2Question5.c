@@ -28,6 +28,11 @@ void negative_sort(int input[], int size)
     int pointer;
     /*int size = sizeof(input) / sizeof(int);  size of the pointer not array*/
 
+    /*
+    Loop invariant:
+    for loop x if any negative numbers are not at index 0 they are shifted left.
+    for loop x for any negative number not at index 0, it is shifted -1 in position.
+    */
     for (x = 1; x < size; x++)
     {
         for (y = 1; y < size; y++)
