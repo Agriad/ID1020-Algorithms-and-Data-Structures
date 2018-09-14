@@ -32,6 +32,12 @@ void negative_sort(int input[], int size)
     Loop invariant:
     for loop x if any negative numbers are not at index 0 they are shifted left.
     for loop x for any negative number not at index 0, it is shifted -1 in position.
+
+    5 7 6 -2 4 -10
+    5 7 -2 6 -10 4
+    5 -2 7 -10 6 4
+    -2 5 -10 7 6 4
+    -2 -10 5 7 6 4
     */
     for (x = 1; x < size; x++)
     {
