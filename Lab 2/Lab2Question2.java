@@ -2,7 +2,7 @@ import static java.lang.System.out;
 import java.util.Scanner;
 import java.util.Arrays;
 
-public class Lab2Question1
+public class Lab2Question2
 {
 
     public static boolean less(Comparable a, Comparable b)
@@ -30,6 +30,13 @@ public class Lab2Question1
                 out.println(Arrays.toString(input));
             }
         }
+
+        for (int x = 0; x < (input.length / 2); x++)
+        {
+            exchange(input, x, input.length - (x + 1));
+        }
+
+        out.println(Arrays.toString(input));
     }
 
     public static void main(String [] args)
@@ -53,7 +60,7 @@ public class Lab2Question1
             out.println(intArray[x]);
         }
 
-        Lab2Question1 sorting = new Lab2Question1();
+        Lab2Question2 sorting = new Lab2Question2();
         sorting.sort(intArray);
 
         for (int x = 0; x < input.length(); x++)
