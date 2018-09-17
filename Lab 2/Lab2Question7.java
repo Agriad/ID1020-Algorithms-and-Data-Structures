@@ -35,58 +35,45 @@ public class Lab2Question7<Item> //Question 3
 
     public void enqueue(Item item)  //adds the item to the "last" node and links it
     {
-        int checkOld = (int) (last.item);
-        int checkNow = (int) (item);
         Node temp = new Node();
         temp.item = item;
-        Node pointer = last;
-        int counter = 0;
 
-        while ((checkNow >= checkOld) && (pointer.next != null))  //7 > 1, 7 > 6
-        {
-            pointer = pointer.next;
-            counter++;
-        }
-
-        if (isEmpty())  //if this is the first ie. if first == null
+        if (size == 0)
         {
             last = temp;
-            first = last;  //put this node into as first
-            //System.out.println("first = last");
-        }
-        else if (size == 2)
-        {
-            if (checkNow > checkOld)  // n<->fl(old)<->n, n<->f(new)<->l(old)<->n
-            {
-                last.before = temp;
-                temp.next = last;
-                first = temp;
-            }
-            else
-            {
-                last.next = temp;
-                temp.before = last;
-                last = temp;
-            }
+            first = last;
+            //out.println("first");
         }
         else
         {
-            if (counter == 0)
+            Node pointer = last;
+            int check1 = (int) (item);
+            int check2 = (int) (pointer.item);
+
+            while ((check1 > check2) && (pointer.before != null))
             {
-                last.next = temp;
-                temp.before = last;
-                last = temp;
+                pointer = pointer.before;
             }
-            else if (counter == size)
+
+            if (pointer == first)
             {
                 pointer.before = temp;
                 temp.next = pointer;
                 first = temp;
             }
-            else
+            else if (pointer == last)
             {
                 pointer.next = temp;
                 temp.before = pointer;
+                last = temp;
+            }
+            else
+            {
+                pointer.next.before = temp;
+                temp.next = pointer.next.before;
+                pointer.next = temp;
+                temp.before = pointer;
+
             }
         }
 
