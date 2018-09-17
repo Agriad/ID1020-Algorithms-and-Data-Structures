@@ -10,13 +10,13 @@ This is an implementation of a generic iterable FIFO queue with a double linked 
 null<--1<-->2<-->3-->null
 Where 3 is the newest data entered.
 The structure of the linked list is heavily inspired from the Algorithms 4th ed
+it is sorting the input in ascending order
 */
 
 public class Lab2Question7<Item> //Question 3
 {
-    //structure:  1-->2-->3-->null
-    //where 1 is the first data entered
-    //now null<--1<-->2<-->3-->null
+    //structure:  null<--1<-->2<-->3-->null
+    //where 1 is the largest data entered and 3 is the smallest
     private Node first = null;  //oldest node and biggest value
     private Node last = null;  //newest node and smallest value
     private int size = 0;
@@ -35,10 +35,10 @@ public class Lab2Question7<Item> //Question 3
 
     public void enqueue(Item item)  //adds the item to the "last" node and links it
     {
-        Node temp = new Node();
+        Node temp = new Node();  //makes a new node for the new data
         temp.item = item;
 
-        if (size == 0)
+        if (size == 0)  //if empty add as first one
         {
             last = temp;
             first = last;
@@ -50,24 +50,24 @@ public class Lab2Question7<Item> //Question 3
             int check1 = (int) (item);
             int check2 = (int) (pointer.item);
 
-            while ((check1 > check2) && (pointer.before != null))
-            {
+            while ((check1 > check2) && (pointer.before != null))  //from last if the number added before if bigger go
+            {  //to the before node
                 pointer = pointer.before;
             }
 
-            if (pointer == first)
+            if (pointer == first)  //if it is the largest make it first
             {
                 pointer.before = temp;
                 temp.next = pointer;
                 first = temp;
             }
-            else if (pointer == last)
+            else if (pointer == last)  //if it is the smallest make it last
             {
                 pointer.next = temp;
                 temp.before = pointer;
                 last = temp;
             }
-            else
+            else  //splice it in between the 2 nodes
             {
                 pointer.next.before = temp;
                 temp.next = pointer.next.before;
@@ -121,7 +121,7 @@ public class Lab2Question7<Item> //Question 3
         int[] testArr = {1, 2, 3, 4, 4, 0};
         Lab2Question7 linkedList = new Lab2Question7();
 
-        for (int x : testArr)
+        for (int x : testArr)  //add stuff from the array into the linked list
         {
             linkedList.enqueue(x);
             out.println(linkedList.toString());

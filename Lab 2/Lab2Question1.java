@@ -2,6 +2,20 @@ import static java.lang.System.out;
 import java.util.Scanner;
 import java.util.Arrays;
 
+/*
+README
+Insertion sort
+ex:
+3214
+takes 1 checks with 3 and 2
+swaps with 3 and 2
+1324
+takes 2 checks with 3 and 1
+swaps with 3
+1234
+The structure of the algorithm is heavily inspired from the Algorithms 4th ed
+ */
+
 public class Lab2Question1
 {
 
@@ -35,15 +49,15 @@ public class Lab2Question1
     public static void main(String [] args)
     {
         Comparable[] intArray = null;
-        out.println("Input array size: ");
+        out.println("Input array size: ");  //takes in input as size of array
         Scanner in = new Scanner(System.in);
         String size = in.nextLine();
         int s = Integer.parseInt(size);
         intArray = new Comparable[s];
-        out.println("Input array items without space: ");
+        out.println("Input array items without space: ");  //takes in inputs as items in array
         String input = in.nextLine();
 
-        for (int x = 0; x < input.length(); x++)
+        for (int x = 0; x < input.length(); x++)  //put input into array
         {
             intArray[x] = Character.getNumericValue(input.charAt(x));
         }
@@ -54,7 +68,7 @@ public class Lab2Question1
         }
 
         Lab2Question1 sorting = new Lab2Question1();
-        sorting.sort(intArray);
+        sorting.sort(intArray);  //puts into sorting algorithm
 
         for (int x = 0; x < input.length(); x++)
         {

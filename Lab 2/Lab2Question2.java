@@ -2,6 +2,20 @@ import static java.lang.System.out;
 import java.util.Scanner;
 import java.util.Arrays;
 
+/*
+README
+Insertion sort
+with rearrange in the end
+ex:
+3214
+takes 1 checks with 3 and 2
+swaps with 3 and 2
+1324
+takes 2 checks with 3 and 1
+swaps with 3
+1234
+ */
+
 public class Lab2Question2
 {
 
@@ -31,7 +45,7 @@ public class Lab2Question2
             }
         }
 
-        for (int x = 0; x < (input.length / 2); x++)
+        for (int x = 0; x < (input.length / 2); x++)  //iterates through half the array and swap with opposite end
         {
             exchange(input, x, input.length - (x + 1));
         }
@@ -42,17 +56,17 @@ public class Lab2Question2
     public static void main(String [] args)
     {
         Comparable[] intArray = null;
-        out.println("Input array size: ");
+        out.println("Input array size: ");  //takes in input as array size
         Scanner in = new Scanner(System.in);
         String size = in.nextLine();
         int s = Integer.parseInt(size);
         intArray = new Comparable[s];
-        out.println("Input array items without space: ");
+        out.println("Input array items without space: ");  //takes in input as array items
         String input = in.nextLine();
 
         for (int x = 0; x < input.length(); x++)
         {
-            intArray[x] = Character.getNumericValue(input.charAt(x));
+            intArray[x] = Character.getNumericValue(input.charAt(x));  //put input into array
         }
 
         for (int x = 0; x < input.length(); x++)
@@ -61,7 +75,7 @@ public class Lab2Question2
         }
 
         Lab2Question2 sorting = new Lab2Question2();
-        sorting.sort(intArray);
+        sorting.sort(intArray);  //puts into sorting algorithm
 
         for (int x = 0; x < input.length(); x++)
         {

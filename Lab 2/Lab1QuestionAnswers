@@ -1,0 +1,15 @@
+Question 1:
+It depends on the programmer but for me to think about it the iterative version was easier to think of the structure but requirers more code to type. On the other hand the recursive one was harder to graps but easier to write once understood.
+The iterative version requires a way to store the data by using ADTs such as a stack or arrays on the other hand the recursive one can temporarily save it by using instance variables.
+
+Question 2:
+Question 3:
+Question 4:
+Question 5:
+Question 6:
+
+Question 7:
+It depends on the application. If you know the length of the data an array should be fine as it is static in size. If you need to resize it a lot then linked list would be better. Implementing the linked list could be more work if you need to tailor it for your need.
+
+Question 8:
+One way is by checking the run time and memory. The run time since array resizing takes up a lot of resources and can take a time. So if the users are able to exploit that they can see a difference with the time. A linked structure does not need to resize the way an array does so it should not have those cases of heavy resource use. You can check the memory as the array in general uses less memory overhead than a linked list. This is because the array does need to use objects to store the data. Although a generic array might have the same caveat in terms of memory as the linked list.

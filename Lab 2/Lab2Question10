@@ -1,0 +1,4 @@
+Question 10:
+a) insertion sort would be fastest as it would only checks one full loop
+b) insertion sort as it would only checks one full loop
+c) selection swaps as it uses less swaps because of it switches with the x and length - x so it becomes less swaps 

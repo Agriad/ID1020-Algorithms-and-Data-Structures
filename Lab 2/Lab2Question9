@@ -1,0 +1,6 @@
+Question 9:
+not selection sort as 0 is in the middle yet is the smallest number
+insertion sort possible if so could be at the 4th iteration as 1 2 3 4 is already sorted
+1 2 3 4 0 6 2 5 7 8 9
+x y z a   x y z a   x
+shellsort possible with distance of 5 if it was started with distance 5 then it is the 5th iteration but it can be different depending of the distance and the start
