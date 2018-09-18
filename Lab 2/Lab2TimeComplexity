@@ -1,0 +1,53 @@
+Time complexity:
+Question 4:
+Insertion sort
+Best case input causes time complexity Ω(N) checks and Ω(1) swaps.
+This is because the array is sent in in a sorted fashion and no swaps are conducted.
+Then there is only N checks as they compare the previous number to the next and see that it is sorted.
+
+12345
+
+12345
+
+Worst case input causes time complexity O(N^2) checks and O(N^2) swaps.
+This is because the array is in the opposite order.
+As such they would need to check N times then N - 1 times and so on because the next number is always supposed to be in index (Length - N).
+As such again the swaps are also N - 1 then N - 2 as they swap one place at a time.
+
+54321
+
+43215
+32145
+...
+12345
+
+in reality
+45321
+43521
+34521
+
+Question 5:
+Weird insertion/bubble sort thing
+Best case input causes time complexity Ω(N^2) checks and Ω(1) swaps
+This is if sorted already or only one type of numbers exist (ie. only positive) and as such it would always iterate through the array N times then N and so on to check.
+For the swaps it would do no swaps
+
+111
+
+111
+
+
+Worst case input causes O(N^2) checks and O(N^2) swaps
+This is when half of the array is the positive and the other half negative. The array is also sorted on the opposite way
+As such it would check N^2 times.
+The swaps are done for N = half of the array size for each negative or positive number.
+
+
+123-1-2-3
+12-13-2-3
+ 
+N/2^(N/2)
+
+-1123-2-3 3 swaps
+-1-2123-3 3 swaps
+-1-2-3123 3 swaps
