@@ -1,0 +1,155 @@
+Question 1 output:
+Input array size: 
+6
+Input array items without space: 
+124350
+1
+2
+4
+3
+5
+0
+[1, 2, 4, 3, 5, 0]
+[1, 2, 3, 4, 5, 0]
+[1, 2, 3, 4, 0, 5]
+[1, 2, 3, 0, 4, 5]
+[1, 2, 0, 3, 4, 5]
+[1, 0, 2, 3, 4, 5]
+[0, 1, 2, 3, 4, 5]
+0
+1
+2
+3
+4
+5
+Process finished with exit code 0
+
+Question 2 output:
+Input array size: 
+6
+Input array items without space: 
+124350
+1
+2
+4
+3
+5
+0
+[1, 2, 4, 3, 5, 0]
+[1, 2, 3, 4, 5, 0]
+[1, 2, 3, 4, 0, 5]
+[1, 2, 3, 0, 4, 5]
+[1, 2, 0, 3, 4, 5]
+[1, 0, 2, 3, 4, 5]
+[0, 1, 2, 3, 4, 5]
+[5, 4, 3, 2, 1, 0]
+5
+4
+3
+2
+1
+0
+
+Process finished with exit code 0
+
+Question 3 output:
+Input array size: 
+6
+Input array items without space: 
+124350
+1
+2
+4
+3
+5
+0
+[1, 2, 4, 3, 5, 0]
+[1, 2, 3, 4, 5, 0]
+[1, 2, 3, 4, 0, 5]
+[1, 2, 3, 0, 4, 5]
+[1, 2, 0, 3, 4, 5]
+[1, 0, 2, 3, 4, 5]
+[0, 1, 2, 3, 4, 5]
+Amount of swap(s): 6
+[5, 4, 3, 2, 1, 0]
+5
+4
+3
+2
+1
+0
+
+Process finished with exit code 0
+
+Question 4 output:
+Input array size: 
+6
+Input array items without space: 
+124350
+[0,1][5,0] 
+[1,2][5,0] 
+[2,4][3,3] [2,4][5,0] 
+[3,3][5,0] 
+[4,5][5,0] 
+
+Amount of inversion: 6
+1
+2
+4
+3
+5
+0
+[1, 2, 4, 3, 5, 0]
+[1, 2, 3, 4, 5, 0]
+[1, 2, 3, 4, 0, 5]
+[1, 2, 3, 0, 4, 5]
+[1, 2, 0, 3, 4, 5]
+[1, 0, 2, 3, 4, 5]
+[0, 1, 2, 3, 4, 5]
+Amount of swap(s): 6
+[5, 4, 3, 2, 1, 0]
+5
+4
+3
+2
+1
+0
+
+Process finished with exit code 0
+
+Question 5 output:
+[-2][-10][5][7][6][4]
+[Done] exited with code=0 in 0.354 seconds
+
+Question 7 output:
+[1]
+[2], [1]
+[3], [2], [1]
+[4], [3], [2], [1]
+[4], [4], [3], [2], [1]
+[4], [4], [3], [2], [1], [0]
+
+Process finished with exit code 0
+
+Question 8:
+1 3 4 8 9 5 2
+1 3 4 8 9 [done] 5 2
+takes 5 checks with 9, 8, 4
+swaps 5 with 9
+swaps 8 with 5
+
+Question 9:
+not selection sort as 0 is in the middle yet is the smallest number
+insertion sort possible if so could be at the 4th iteration as 1 2 3 4 is already sorted
+1 2 3 4 0 6 2 5 7 8 9
+x y z a   x y z a   x
+shellsort possible with distance of 5 if it was started with distance 5 then it is the 5th iteration but it can be different depending of the distance and the start
+
+Question 10:
+a) insertion sort would be fastest as it would only checks one full loop
+b) insertion sort as it would only checks one full loop
+c) selection swaps as it uses less swaps because of it switches with the x and length - x so it becomes less swaps 
+
+Question 11:
+h = 2
+as if you ignore everyother number it is sorted when you start at index 0 and index 1
