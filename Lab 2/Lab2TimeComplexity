@@ -12,7 +12,7 @@ Then there is only N checks as they compare the previous number to the next and 
 Worst case input causes time complexity O(N^2) checks and O(N^2) swaps.
 This is because the array is in the opposite order.
 As such they would need to check N times then N - 1 times and so on because the next number is always supposed to be in index (Length - N).
-As such again the swaps are also N - 1 then N - 2 as they swap one place at a time.
+As such again the swaps are also 1 then 2 then up to N as they swap one place at a time.
 
 54321
 
