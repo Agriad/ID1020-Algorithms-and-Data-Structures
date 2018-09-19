@@ -46,7 +46,7 @@ The swaps are done for N = half of the array size for each negative or positive 
 123-1-2-3
 12-13-2-3
  
-N/2^(N/2)
+N/2^(2)
 
 -1123-2-3 3 swaps
 -1-2123-3 3 swaps
