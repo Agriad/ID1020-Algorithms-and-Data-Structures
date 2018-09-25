@@ -5,19 +5,20 @@ import java.io.FileWriter;
 
 public class Lab3Question1
 {
-    public static void textFilter(String text) throws IOException
+    public void textFilter(String text) throws IOException  //throws exception so that it can complain if it
+    // cannot find or create the file
     {
         BufferedReader br = new BufferedReader(new FileReader(text));
         String line = "";
-        FileWriter fr = new FileWriter("TextModified.txt");
+        FileWriter fr = new FileWriter("TextModified.txt");  //make a new file with this name
 
-        while ((line = br.readLine()) != null)
+        while ((line = br.readLine()) != null)  //when there are words
         {
-            System.out.println("1");
+            //System.out.println("1");
             int x = 0;
             int limit = line.length();
 
-            while (x < limit)
+            while (x < limit)  //while in the String check and change if needed
             {
                 Character c = line.charAt(x);
                 x++;

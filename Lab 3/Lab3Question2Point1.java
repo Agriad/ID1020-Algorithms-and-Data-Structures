@@ -121,13 +121,17 @@ public class Lab3Question2Point1
                 }
                 if (spaceCounter != 0)
                 {
-                    wordCounter++;
                     //System.out.println(sb.toString());  //replace with inserting
-                    filteredWords[wordCounter] = sb.toString();
+                    if (wordCounter < 100)
+                    {
+                        //System.out.println(sb.toString());
+                        filteredWords[wordCounter] = sb.toString();
+                    }
                     int delete = sb.length();
                     sb.delete(0, delete);
                     anotherCounter = 0;
                     spaceCounter = 0;
+                    wordCounter++;
                 }
 
                 letterCounter++;
@@ -143,15 +147,32 @@ public class Lab3Question2Point1
         { // Build symbol table and count frequencies.
             String wordInput = filteredWords[x];
 
-            if (!st.contains(word)) st.put(wordInput, 1);
-            else st.put(wordInput, st.get(wordInput) + 1);
+            if (!st.contains(wordInput))
+            {
+                st.put(wordInput, 1);
+            }
+            else
+            {
+                st.put(wordInput, st.get(wordInput) + 1);
+            }
         }
 // Find a key with the highest frequency count.
         String max = "";
         st.put(max, 0);
-        for (String wordOutput : st.keys())
+        /*for (String wordOutput : (String[]) (st.keys()))
             if (st.get(wordOutput) > st.get(max))
-                max = wordOutput;
+                max = wordOutput;*/
+        Comparable[] outputArray = st.keys();
+
+        for (int x = 0; x < outputArray.length; x++)
+        {
+            System.out.println((String) (outputArray[x]) + ' ' + st.get((String) (outputArray[x])));
+            if (st.get((String) (outputArray[x])) > st.get(max))
+            {
+                max = (String) (outputArray[x]);
+            }
+        }
+
         System.out.println(max + " " + st.get(max));
     }
 }

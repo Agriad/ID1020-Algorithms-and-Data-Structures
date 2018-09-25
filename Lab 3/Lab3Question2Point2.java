@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Lab3Question2Point2
 {
 
@@ -53,10 +57,108 @@ public class Lab3Question2Point2
             x.N = size(x.left) + size(x.right) + 1;
             return x;
         }
+
+        public boolean contains(Key key)
+        {}
+
+        public Key[] keys()
+        {
+            Key[] temp = (Key[]) new Comparable[size()];
+        }
+
 // See page 399.
 // See page 407 for min(), max(), floor(), and ceiling().
 // See page 409 for select() and rank().
 // See page 411 for delete(), deleteMin(), and deleteMax().
 // See page 413 for keys().
+    }
+
+
+    public static void main(String [] args) throws IOException
+    {
+        Scanner in = new Scanner(new File("TextModified.txt"));
+        Lab3Question2Point2 lab = new Lab3Question2Point2();
+        int limit = 100;
+        String word = in.nextLine();
+        int wordCounter = 0;
+        int letterCounter = 0;
+        int spaceCounter = 0;
+        int anotherCounter = 0;
+        String[] filteredWords = new String[100];
+
+        while (wordCounter < limit)
+        {
+            StringBuilder sb = new StringBuilder();
+            int stringLimit = word.length();
+            while (letterCounter < stringLimit)
+            {
+                if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)
+                {
+                    spaceCounter++;
+                }
+                else if (word.charAt(letterCounter) != ' ')
+                {
+                    sb.append(word.charAt(letterCounter));
+                    anotherCounter++;
+                    if (letterCounter == stringLimit - 1)
+                    {
+                        spaceCounter++;
+                    }
+                }
+                if (spaceCounter != 0)
+                {
+                    //System.out.println(sb.toString());  //replace with inserting
+                    if (wordCounter < 100)
+                    {
+                        //System.out.println(sb.toString());
+                        filteredWords[wordCounter] = sb.toString();
+                    }
+                    int delete = sb.length();
+                    sb.delete(0, delete);
+                    anotherCounter = 0;
+                    spaceCounter = 0;
+                    wordCounter++;
+                }
+
+                letterCounter++;
+            }
+
+            letterCounter = 0;
+            word = in.nextLine();
+        }
+        Lab3Question2Point2.BST<String, Integer> st =
+                lab.new BST<String, Integer>();
+
+        for (int x = 0; x < filteredWords.length; x++)
+        { // Build symbol table and count frequencies.
+            String wordInput = filteredWords[x];
+
+            if (!st.contains(wordInput))
+            {
+                st.put(wordInput, 1);
+            }
+            else
+            {
+                st.put(wordInput, st.get(wordInput) + 1);
+            }
+        }
+// Find a key with the highest frequency count.
+        String max = "";
+        st.put(max, 0);
+        /*for (String wordOutput : (String[]) (st.keys()))
+            if (st.get(wordOutput) > st.get(max))
+                max = wordOutput;*/
+        Comparable[] outputArray = st.keys();
+
+        for (int x = 0; x < outputArray.length; x++)
+        {
+            System.out.println((String) (outputArray[x]) + ' ' + st.get((String) (outputArray[x])));
+            if (st.get((String) (outputArray[x])) > st.get(max))
+            {
+                max = (String) (outputArray[x]);
+            }
+        }
+
+        System.out.println(max + " " + st.get(max));
     }
 }
