@@ -10,8 +10,8 @@ public class Lab3Question1
     {
         BufferedReader br = new BufferedReader(new FileReader(text));
         String line = "";
-        FileWriter fr = new FileWriter("TextModified.txt");  //make a new file with this name
-
+        FileWriter fr = new FileWriter("TextModified.txt");  //make a new file with this name. Can use
+    //buffered writer as well in addition
         while ((line = br.readLine()) != null)  //when there are words
         {
             //System.out.println("1");
