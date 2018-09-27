@@ -59,11 +59,12 @@ public class Lab3Question2Point2
             return x;
         }
 
-        public boolean contains(Key key)
+        public boolean contains(Key key)  //is ok i think
         {
             //System.out.println("1");
-            Node temp = null;
+            //Node temp = null;
 
+            /*
             if (root == null)
             {
                 System.out.println("null access");
@@ -73,37 +74,49 @@ public class Lab3Question2Point2
             {
                 System.out.println("root access");
                 temp = contains(root, key);  //send in through root
-            }
+                if (temp != null)
+                {
+                    System.out.println("temp access " + temp.key);
+                }
+            }*/
+
+            //System.out.println("root access");
+            Node temp = contains(root, key);  //send in through root
 
             if (temp != null)
             {
+                System.out.println("there");
                 return (true);  //if found it exist
             }
             else
             {
+                System.out.println("not there");
                 return (false);  //doesn't exist
             }
         }
 
         public Node contains(Node x, Key key)  //first get in through root
         {
-            System.out.println(x.key);
-            int compare = key.compareTo(x.key);
+            //System.out.println(x.key);
+            if (x != null)
+            {
+                int compare = key.compareTo(x.key);
 
-            if (compare < 0)  //if less than go to the left one
-            {
-                System.out.println("left access");
-                contains(x.left, key);
-            }
-            else if (compare > 0)  //if larger than go to the right one
-            {
-                System.out.println("right access");
-                contains(x.right, key);
-            }
-            else  //if equal return the node
-            {
-                System.out.println("equal or null access");
-                return (x);
+                if (compare == 0) //if equal return the node
+                {
+                    System.out.println("equal or null access");
+                    return (x);
+                }
+                else if (compare < 0)  //if less than go to the left one
+                {
+                    System.out.println("left access");
+                    contains(x.left, key);
+                }
+                else if (compare > 0)  //if larger than go to the right one
+                {
+                    System.out.println("right access");
+                    contains(x.right, key);
+                }
             }
             return (x);  //just return the node
 
@@ -226,11 +239,13 @@ public class Lab3Question2Point2
 
             if (!st.contains(wordInput))
             {
-                st.put(wordInput, 1);
+                System.out.printf("input 1: %s, %d\n" ,wordInput , x);
+                //st.put(wordInput, 1);
             }
             else
             {
-                st.put(wordInput, st.get(wordInput) + 1);
+                System.out.printf("input 2: %s, %d\n" ,wordInput , x);
+                //st.put(wordInput, st.get(wordInput) + 1);
             }
         }
 
