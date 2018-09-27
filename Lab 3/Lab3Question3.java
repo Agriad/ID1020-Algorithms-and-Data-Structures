@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Lab3Question2Point2
+public class Lab3Question3
 {
 
     public class BST<Key extends Comparable<Key>, Value>
@@ -114,7 +114,7 @@ public class Lab3Question2Point2
     {
         long startTime = System.nanoTime();
         Scanner in = new Scanner(new File("TextModified.txt"));
-        Lab3Question2Point2 lab = new Lab3Question2Point2();
+        Lab3Question3 lab = new Lab3Question3();
         int limit = 100;
         String word = in.nextLine();
         int wordCounter = 0;
@@ -163,7 +163,7 @@ public class Lab3Question2Point2
             letterCounter = 0;
             word = in.nextLine();
         }
-        Lab3Question2Point2.BST<String, Integer> st =
+        Lab3Question3.BST<String, Integer> st =
                 lab.new BST<String, Integer>();
 
         for (int x = 0; x < filteredWords.length; x++)
@@ -198,6 +198,58 @@ public class Lab3Question2Point2
         System.out.println(max + " " + st.get(max));
         long endTime = System.nanoTime();
         long time = endTime - startTime;
-        System.out.printf("Program time: %d ns", time);
+        System.out.printf("Program time: %d ns\n", time);
+
+        for (int x = 0; x < limit; x++)
+        {
+            for (int y = 0; y < limit; y++)
+            {
+                
+            }
+        }
+
+
+        Scanner inType = new Scanner(System.in);
+        int loop = 0;
+        while (loop == 0)
+        {
+            System.out.println("To exit type abc");
+            System.out.println("Type a number \"N X\" to check for the Nth most to the N+Xth most ");
+            String input = inType.nextLine();
+
+            if (input.equals("abc"))
+            {
+                loop = 1;
+            }
+            else
+            {
+                String[] output = new String[limit];
+                String[] numbers = input.split("\\W+");
+
+                System.out.println(numbers[0]);
+                System.out.println(numbers[1]);
+                int number1 = Integer.parseInt(numbers[0]);
+                int number2 = Integer.parseInt(numbers[1]);
+                int outputCounter = 0;
+                max = "";
+                st.put(max, 0);
+                for (int x = 0; x < filteredWords.length; x++)
+                {
+                    //System.out.println(filteredWords[x] + ' ' + st.get(filteredWords[x]));
+                    if ((number2 > st.get(filteredWords[x])) && (st.get(filteredWords[x]) > number1))
+                    {
+                        output[outputCounter] = filteredWords[x];
+                        outputCounter++;
+                    }
+                }
+
+                for (int x = 0; x < outputCounter; x++)
+                {
+                    System.out.println(output[x]);
+                }
+            }
+        }
+
     }
 }
+

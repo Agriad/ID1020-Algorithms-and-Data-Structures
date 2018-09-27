@@ -90,6 +90,7 @@ public class Lab3Question2Point1
 
     public static void main(String [] args) throws IOException
     {
+        long startTime = System.nanoTime();
         Scanner in = new Scanner(new File("TextModified.txt"));
         Lab3Question2Point1 lab = new Lab3Question2Point1();
         int limit = 100;  //limit of the amount of words
@@ -175,5 +176,8 @@ public class Lab3Question2Point1
         }
 
         System.out.println(max + " " + st.get(max));
+        long endTime = System.nanoTime();
+        long time = endTime - startTime;
+        System.out.printf("Program time: %d ns", time);
     }
 }
