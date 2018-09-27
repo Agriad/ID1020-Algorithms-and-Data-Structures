@@ -1,139 +1,106 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Lab3Question3
 {
-
-    public class BST<Key extends Comparable<Key>, Value>
+    //taken from the algorithm book
+    public class BinarySearchST<Key extends Comparable<Key>, Value>
     {
-        private Node root; // root of BST
+        private Key[] keys;  //array of key
+        private Value[] vals;  //array of values
+        private int N;  //the length
+        public BinarySearchST(int capacity)  //make the size of the array this one is non resizing
+        { // See Algorithm 1.1 for standard array-resizing code.
+            keys = (Key[]) new Comparable[capacity];  //typecast the comparable to key when making it
+            vals = (Value[]) new Object[capacity];  //typecast the object to value when making it
+        }
 
-        private class Node
+        public boolean isEmpty()  //checks, if keys == null, true else false
         {
-            private Key key; // key
-            private Value val; // associated value
-            private Node left, right; // links to subtrees
-            private int N; // # nodes in subtree rooted here
-            public Node(Key key, Value val, int N)
-            { this.key = key; this.val = val; this.N = N; }
+            return (keys == null);
         }
 
-        public int size()
-        { return size(root); }  //find it through the root first
+        public int size()  //gets the size
+        { return N; }
 
-        private int size(Node x)  //
+        public Value get(Key key)  //gets the value corresponding to the key
         {
-            if (x == null) return 0;  //if empty return 0
-            else return x.N;  //returns the number of stuff under the node
+            if (isEmpty()) return null;  //if empty null
+            int i = rank(key);  //get the index of it
+            if (i < N && keys[i].compareTo(key) == 0) return vals[i];  //if in array and found the key return the value
+            else return null;
         }
 
-        public Value get(Key key)
-        { return get(root, key); }  //send in through the root first
-
-        private Value get(Node x, Key key)
-        { // Return value associated with key in the subtree rooted at x;
-            // return null if key not present in subtree rooted at x.
-            if (x == null) return null;  //if doesn't exist return null
-            int cmp = key.compareTo(x.key);  //get the comparison
-            if (cmp < 0) return get(x.left, key);  //if less than go to the left
-            else if (cmp > 0) return get(x.right, key);  //if bigger than go to the right
-            else return x.val;  //return the value
+        public int rank(Key key)  //uses binary search
+        {
+            int lo = 0, hi = N-1;  //boundaries
+            while (lo <= hi)
+            {
+                int mid = lo + (hi - lo) / 2;
+                int cmp = key.compareTo(keys[mid]);
+                if (cmp < 0) hi = mid - 1;  //if lower search the lower part
+                else if (cmp > 0) lo = mid + 1;  //if higher search the higher part
+                else return mid;  //if matched return that
+            }
+            return lo;  //if it doesn't exist put it in index lo
         }
+        // See page 381.
 
-        // See page 399.
         public void put(Key key, Value val)
         { // Search for key. Update value if found; grow table if new.
-            root = put(root, key, val);  //put it through the root first
+            int i = rank(key);  //get the index of the key
+            if (i < N && keys[i].compareTo(key) == 0)  //if in array and found return the
+            { vals[i] = val; return; }
+            for (int j = N; j > i; j--)
+            { keys[j] = keys[j-1]; vals[j] = vals[j-1]; }
+            keys[i] = key; vals[i] = val;
+            N++;
         }
 
-        private Node put(Node x, Key key, Value val)
-        {// Change key’s value to val if key in subtree rooted at x.
-            // Otherwise, add new node to subtree associating key with val.
-            if (x == null) return new Node(key, val, 1);  //if empty put it there
-            int cmp = key.compareTo(x.key);
-            if (cmp < 0) x.left = put(x.left, key, val);  //if less than go to the left node
-            else if (cmp > 0) x.right = put(x.right, key, val);  //if bigger go to the right node
-            else x.val = val;  //if the same key overwrite the value
-            x.N = size(x.left) + size(x.right) + 1;  //adds one and then it goes up and adds them up again
-            return x;
-        }
-
-        public boolean contains(Key key)  //is ok i think
+        public boolean contains(Key key)  //checks the array if there is a key that is the same
         {
-            Node temp = contains(root, key);  //send in through root
+            int size = size();
 
-            if (temp != null)
+            for (int x = 0; x < size; x++)
             {
-                //System.out.println("there");
-                return (true);  //if found it exist
-            }
-            else
-            {
-                //System.out.println("not there");
-                return (false);  //doesn't exist
-            }
-        }
-
-        private Node contains(Node x, Key key)  //first get in through root
-        {
-            if (x == null)
-            {
-                //System.out.println("null");
-                return (x);
-            }
-            else
-            {
-                int check = key.compareTo(x.key);
-
-                if (check < 0)
+                if (key.equals(keys[x]))
                 {
-                    //System.out.println("left");
-                    x = contains(x.left, key);
-                }
-                else if (check > 0)
-                {
-                    //System.out.println("right");
-                    x = contains(x.right, key);
+                    return (true);
                 }
             }
 
-            //System.out.println("out");
-            return (x);
+            return (false);
         }
 
-        public Key[] keys()
+        public Key[] keys()  //returns a copy of the key array
         {
-            Key[] temp = (Key[]) new Comparable[root.N];
+            int tempLength = size();
+            Key[] tempArray = (Key[]) new Comparable[tempLength];
 
+            for (int x = 0; x < tempLength; x++)
+            {
+                tempArray[x] = this.keys[x];
+                //System.out.println(Arrays.toString(vals));
+            }
 
-
-            return (temp);
+            return (tempArray);
         }
-
-        private Key[]
-
-// See page 399.
-// See page 407 for min(), max(), floor(), and ceiling().
-// See page 409 for select() and rank().
-// See page 411 for delete(), deleteMin(), and deleteMax().
-// See page 413 for keys().
     }
-
 
     public static void main(String [] args) throws IOException
     {
         long startTime = System.nanoTime();
         Scanner in = new Scanner(new File("TextModified.txt"));
         Lab3Question3 lab = new Lab3Question3();
-        int limit = 100;
+        int limit = 100;  //limit of the amount of words
         String word = in.nextLine();
-        int wordCounter = 0;
-        int letterCounter = 0;
-        int spaceCounter = 0;
-        int anotherCounter = 0;
-        String[] filteredWords = new String[limit];
+        int wordCounter = 0;  //counter for 100 words
+        int letterCounter = 0;  //counter so that it stays in the line
+        int spaceCounter = 0;  //marker for the space after the word
+        int anotherCounter = 0;  //marker for starting to add letters of the word
+        String[] filteredWords = new String[limit];  //array to store the extracted words
 
         while (wordCounter < limit)
         {
@@ -141,69 +108,71 @@ public class Lab3Question3
             int stringLimit = word.length();
             while (letterCounter < stringLimit)
             {
-                if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)
-                {
-                    spaceCounter++;
+                if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)  //checks if there is a space after the
+                {//word
+                    spaceCounter++;  //marks a space if found after a word
                 }
-                else if (word.charAt(letterCounter) != ' ')
+                else if (word.charAt(letterCounter) != ' ')  //if a letter add it
                 {
                     sb.append(word.charAt(letterCounter));
-                    anotherCounter++;
+                    anotherCounter++;  //marks that a word is found
                     if (letterCounter == stringLimit - 1)
                     {
-                        spaceCounter++;
+                        spaceCounter++;  //if at the end of the line and a letter is there mark it so that it can write
                     }
                 }
-                if (spaceCounter != 0)
-                {
+                if (spaceCounter != 0)  //if a space after the word is found make it into a string and put it in the
+                {//array
                     //System.out.println(sb.toString());  //replace with inserting
-                    if (wordCounter < limit)
+                    if (wordCounter < limit)  //prevent overfilling the array at the last line
                     {
                         //System.out.println(sb.toString());
                         filteredWords[wordCounter] = sb.toString();
                     }
-                    int delete = sb.length();
+                    int delete = sb.length();  //reset for the next word
                     sb.delete(0, delete);
                     anotherCounter = 0;
                     spaceCounter = 0;
                     wordCounter++;
                 }
 
-                letterCounter++;
+                letterCounter++;  //increment the pointer for the line
             }
 
-            letterCounter = 0;
+            letterCounter = 0;  //reset for the next line
             word = in.nextLine();
         }
-        Lab3Question3.BST<String, Integer> st =
-                lab.new BST<String, Integer>();
 
-        for (int x = 0; x < filteredWords.length; x++)
+        Lab3Question3.BinarySearchST<String, Integer> st =
+                lab.new BinarySearchST  <String, Integer>(limit);
+
+        for (int x = 0; x < filteredWords.length; x++)  //for the words in the array put it in
         { // Build symbol table and count frequencies.
             String wordInput = filteredWords[x];
 
-            if (!st.contains(wordInput))
+            if (!st.contains(wordInput))  //if a new word add it in
             {
-                //System.out.printf("input 1: %s, %d\n" ,wordInput , x);
                 st.put(wordInput, 1);
             }
-            else
+            else  //if an old word increment the value
             {
-                //System.out.printf("input 2: %s, %d\n" ,wordInput , x);
                 st.put(wordInput, st.get(wordInput) + 1);
             }
         }
-
 // Find a key with the highest frequency count.
-        String max = "";
+        String max = "";  //add this as a benchmark
         st.put(max, 0);
+        /*for (String wordOutput : (String[]) (st.keys()))
+            if (st.get(wordOutput) > st.get(max))
+                max = wordOutput;*/
+        Comparable[] outputArray = st.keys();  //get the list of keys in the dictionary/symbol table
 
-        for (int x = 0; x < filteredWords.length; x++)
+        for (int x = 0; x < outputArray.length; x++)  //for all the entries check the highest amount of entry
         {
-            //System.out.println(filteredWords[x] + ' ' + st.get(filteredWords[x]));
-            if (st.get(filteredWords[x]) > st.get(max))
+            //System.out.println((String) (outputArray[x]) + ' ' + st.get((String) (outputArray[x])));
+            if (st.get((String) (outputArray[x])) > st.get(max))  //if bigger than
             {
-                max = filteredWords[x];
+                max = (String) (outputArray[x]);
             }
         }
 
@@ -211,6 +180,7 @@ public class Lab3Question3
         long endTime = System.nanoTime();
         long time = endTime - startTime;
         System.out.printf("Program time: %d ns\n", time);
+
 
         String[][] sorted = new String[limit / 2][];
         int putCounter = 1;
@@ -220,15 +190,15 @@ public class Lab3Question3
         for (int x = sorted.length; x >= 1; x--)
         {
             String[] temp = new String[limit];
-            for (int y = 0; y < limit; y++)
+            for (int y = 0; y < outputArray.length; y++)
             {
-                if (st.get(filteredWords[y]) == x)  //issue is filtered words contain multiple
+                if (st.get((String) (outputArray[y])) == x)  //issue is filtered words contain multiple
                 {
-                    temp[counterInnerSort] = filteredWords[y];
+                    temp[counterInnerSort] = (String) (outputArray[y]);
                     sorted[putCounter] = temp;
                     counterSort = 1;
-                    System.out.println(x);
-                    System.out.println(Arrays.toString(temp));
+                    //System.out.println(x);
+                    //System.out.println(Arrays.toString(temp));
                     counterInnerSort++;
                 }
             }
@@ -242,7 +212,7 @@ public class Lab3Question3
             }
         }
 
-        //System.out.println(Arrays.toString(sorted));
+        //System.out.println(Arrays.toString(outputArray));
         //System.out.println(Arrays.toString(sorted[1]));
         //System.out.println(Arrays.toString(sorted[2]));
 
@@ -263,8 +233,8 @@ public class Lab3Question3
                 String[] output = new String[limit];
                 String[] numbers = input.split("\\W+");
 
-                System.out.println(numbers[0]);
-                System.out.println(numbers[1]);
+                //System.out.println(numbers[0]);
+                //System.out.println(numbers[1]);
                 int number1 = Integer.parseInt(numbers[0]);
                 int number2 = Integer.parseInt(numbers[1]);
                 int outputCounter = 0;
@@ -295,7 +265,5 @@ public class Lab3Question3
                 }
             }
         }
-
     }
 }
-
