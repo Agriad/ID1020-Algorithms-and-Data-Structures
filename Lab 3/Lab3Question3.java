@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Lab3Question3
 {
@@ -102,6 +103,17 @@ public class Lab3Question3
             return (x);
         }
 
+        public Key[] keys()
+        {
+            Key[] temp = (Key[]) new Comparable[root.N];
+
+
+
+            return (temp);
+        }
+
+        private Key[]
+
 // See page 399.
 // See page 407 for min(), max(), floor(), and ceiling().
 // See page 409 for select() and rank().
@@ -200,21 +212,46 @@ public class Lab3Question3
         long time = endTime - startTime;
         System.out.printf("Program time: %d ns\n", time);
 
-        for (int x = 0; x < limit; x++)
+        String[][] sorted = new String[limit / 2][];
+        int putCounter = 1;
+        int counterSort = 0;
+        int counterInnerSort = 0;
+
+        for (int x = sorted.length; x >= 1; x--)
         {
+            String[] temp = new String[limit];
             for (int y = 0; y < limit; y++)
             {
-                
+                if (st.get(filteredWords[y]) == x)  //issue is filtered words contain multiple
+                {
+                    temp[counterInnerSort] = filteredWords[y];
+                    sorted[putCounter] = temp;
+                    counterSort = 1;
+                    System.out.println(x);
+                    System.out.println(Arrays.toString(temp));
+                    counterInnerSort++;
+                }
+            }
+
+            counterInnerSort = 0;
+
+            if (counterSort == 1)
+            {
+                counterSort = 0;
+                putCounter++;
             }
         }
 
+        //System.out.println(Arrays.toString(sorted));
+        //System.out.println(Arrays.toString(sorted[1]));
+        //System.out.println(Arrays.toString(sorted[2]));
 
         Scanner inType = new Scanner(System.in);
         int loop = 0;
         while (loop == 0)
         {
             System.out.println("To exit type abc");
-            System.out.println("Type a number \"N X\" to check for the Nth most to the N+Xth most ");
+            System.out.println("Type 2 numbers \"N X\" to check for the Nth to the Xth most used word");
             String input = inType.nextLine();
 
             if (input.equals("abc"))
@@ -233,19 +270,28 @@ public class Lab3Question3
                 int outputCounter = 0;
                 max = "";
                 st.put(max, 0);
-                for (int x = 0; x < filteredWords.length; x++)
+                for (int x = 1; x < putCounter; x++)
                 {
-                    //System.out.println(filteredWords[x] + ' ' + st.get(filteredWords[x]));
-                    if ((number2 > st.get(filteredWords[x])) && (st.get(filteredWords[x]) > number1))
+                    for (int y = 0; y < sorted[x].length; y++)
                     {
-                        output[outputCounter] = filteredWords[x];
-                        outputCounter++;
+                        if ((number1 <= x) && (x <= number2))
+                        {
+                            if(sorted[x][y] != null)
+                            {
+                                output[outputCounter] = sorted[x][y];
+                                outputCounter++;
+                            }
+                        }
                     }
                 }
 
-                for (int x = 0; x < outputCounter; x++)
+                for (String s : output)
                 {
-                    System.out.println(output[x]);
+                    if (s != null)
+                    {
+                        int number = st.get(s);
+                        System.out.printf("%s %d\n", s, number);
+                    }
                 }
             }
         }
