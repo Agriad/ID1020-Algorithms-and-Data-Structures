@@ -201,7 +201,7 @@ public class Lab3Question4
         }
     }
 
-    public static void main(String [] args) throws IOException
+    public static void main(String[] args) throws IOException
     {
         long startTime = System.nanoTime();
         Scanner in = new Scanner(new File("TextModified.txt"));
@@ -258,7 +258,7 @@ public class Lab3Question4
 
         long startAlgoTime = System.nanoTime();
         Lab3Question4.RedBlackBST<String, Integer> st =
-                lab.new RedBlackBST<>();
+                lab.new RedBlackBST<String, Integer>();
 
         for (int x = 0; x < filteredWords.length; x++)  //for the words in the array put it in
         { // Build symbol table and count frequencies.

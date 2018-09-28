@@ -5,7 +5,7 @@ import static java.lang.System.out;
 
 public class Lab3Question6
 {
-    public static void main(String [] args) throws IOException
+    public static void main(String[] args) throws IOException
     {
         long startTime = System.nanoTime();
         Scanner in = new Scanner(new File("TextModified.txt"));

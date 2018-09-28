@@ -40,7 +40,7 @@ public class Lab3Question1
         fr.close();
     }
 
-    public static void main(String [] args) throws IOException
+    public static void main(String[] args) throws IOException
     {
         Lab3Question1 filter = new Lab3Question1();
         String text = "Text.txt";

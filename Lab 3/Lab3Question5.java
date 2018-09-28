@@ -44,7 +44,7 @@ public class Lab3Question5
 
     }
 
-    public static void main(String [] args) throws IOException
+    public static void main(String[] args) throws IOException
     {
         long startTime = System.nanoTime();
         Scanner in = new Scanner(new File("TextModified.txt"));
