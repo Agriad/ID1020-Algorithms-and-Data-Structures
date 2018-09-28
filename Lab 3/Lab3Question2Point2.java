@@ -162,7 +162,11 @@ public class Lab3Question2Point2
             }
 
             letterCounter = 0;  //reset for the next line
-            word = in.nextLine();
+            //System.out.println(wordCounter);
+            if (in.hasNextLine())
+            {
+                word = in.nextLine();
+            }
         }
 
         long startAlgoTime = System.nanoTime();
