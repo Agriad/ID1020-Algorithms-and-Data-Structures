@@ -105,6 +105,7 @@ public class Lab3Question2Point1
         {
             StringBuilder sb = new StringBuilder();
             int stringLimit = word.length();
+
             while (letterCounter < stringLimit)
             {
                 if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)  //checks if there is a space after the
@@ -142,6 +143,7 @@ public class Lab3Question2Point1
             word = in.nextLine();
         }
 
+        long startAlgoTime = System.nanoTime();
         Lab3Question2Point1.BinarySearchST<String, Integer> st =
                 lab.new BinarySearchST  <String, Integer>(limit);
 
@@ -178,6 +180,8 @@ public class Lab3Question2Point1
         System.out.println(max + " " + st.get(max));
         long endTime = System.nanoTime();
         long time = endTime - startTime;
-        System.out.printf("Program time: %d ns", time);
+        long time1 = endTime - startAlgoTime;
+        System.out.printf("Program time total: %d ns\n", time);
+        System.out.printf("Program algorithm time: %d ns", time1);
     }
 }

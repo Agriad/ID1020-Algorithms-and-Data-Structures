@@ -77,7 +77,7 @@ public class Lab3Question2Point2
 
         private Node contains(Node x, Key key)  //first get in through root
         {
-            if (x == null)
+            if (x == null)  //if nothing return null
             {
                 //System.out.println("null");
                 return (x);
@@ -86,12 +86,12 @@ public class Lab3Question2Point2
             {
                 int check = key.compareTo(x.key);
 
-                if (check < 0)
+                if (check < 0)  //if less go left
                 {
                     //System.out.println("left");
                     x = contains(x.left, key);
                 }
-                else if (check > 0)
+                else if (check > 0)  //if more go right
                 {
                     //System.out.println("right");
                     x = contains(x.right, key);
@@ -99,8 +99,8 @@ public class Lab3Question2Point2
             }
 
             //System.out.println("out");
-            return (x);
-        }
+            return (x);  //just return the node
+    }
 
 // See page 399.
 // See page 407 for min(), max(), floor(), and ceiling().
@@ -117,56 +117,59 @@ public class Lab3Question2Point2
         Lab3Question2Point2 lab = new Lab3Question2Point2();
         int limit = 100;
         String word = in.nextLine();
-        int wordCounter = 0;
-        int letterCounter = 0;
-        int spaceCounter = 0;
-        int anotherCounter = 0;
-        String[] filteredWords = new String[limit];
+        int wordCounter = 0;  //counter for 100 words
+        int letterCounter = 0;  //counter so that it stays in the line
+        int spaceCounter = 0;  //marker for the space after the word
+        int anotherCounter = 0;  //marker for starting to add letters of the word
+        String[] filteredWords = new String[limit];  //array to store the extracted words
 
         while (wordCounter < limit)
         {
             StringBuilder sb = new StringBuilder();
             int stringLimit = word.length();
+
             while (letterCounter < stringLimit)
             {
-                if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)
-                {
-                    spaceCounter++;
+                if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)  //checks if there is a space after the
+                {//word
+                    spaceCounter++;  //marks a space if found after a word
                 }
-                else if (word.charAt(letterCounter) != ' ')
+                else if (word.charAt(letterCounter) != ' ')  //if a letter add it
                 {
                     sb.append(word.charAt(letterCounter));
-                    anotherCounter++;
+                    anotherCounter++;  //marks that a word is found
                     if (letterCounter == stringLimit - 1)
                     {
-                        spaceCounter++;
+                        spaceCounter++;  //if at the end of the line and a letter is there mark it so that it can write
                     }
                 }
-                if (spaceCounter != 0)
-                {
+                if (spaceCounter != 0)  //if a space after the word is found make it into a string and put it in the
+                {//array
                     //System.out.println(sb.toString());  //replace with inserting
-                    if (wordCounter < limit)
+                    if (wordCounter < limit)  //prevent overfilling the array at the last line
                     {
                         //System.out.println(sb.toString());
                         filteredWords[wordCounter] = sb.toString();
                     }
-                    int delete = sb.length();
+                    int delete = sb.length();  //reset for the next word
                     sb.delete(0, delete);
                     anotherCounter = 0;
                     spaceCounter = 0;
                     wordCounter++;
                 }
 
-                letterCounter++;
+                letterCounter++;  //increment the pointer for the line
             }
 
-            letterCounter = 0;
+            letterCounter = 0;  //reset for the next line
             word = in.nextLine();
         }
+
+        long startAlgoTime = System.nanoTime();
         Lab3Question2Point2.BST<String, Integer> st =
                 lab.new BST<String, Integer>();
 
-        for (int x = 0; x < filteredWords.length; x++)
+        for (int x = 0; x < filteredWords.length; x++)  //for the words in the array put it in
         { // Build symbol table and count frequencies.
             String wordInput = filteredWords[x];
 
@@ -186,10 +189,10 @@ public class Lab3Question2Point2
         String max = "";
         st.put(max, 0);
 
-        for (int x = 0; x < filteredWords.length; x++)
+        for (int x = 0; x < filteredWords.length; x++)  //for all the input check the highest amount of entry
         {
             //System.out.println(filteredWords[x] + ' ' + st.get(filteredWords[x]));
-            if (st.get(filteredWords[x]) > st.get(max))
+            if (st.get(filteredWords[x]) > st.get(max))  //if bigger than
             {
                 max = filteredWords[x];
             }
@@ -198,6 +201,8 @@ public class Lab3Question2Point2
         System.out.println(max + " " + st.get(max));
         long endTime = System.nanoTime();
         long time = endTime - startTime;
-        System.out.printf("Program time: %d ns", time);
+        long time1 = endTime - startAlgoTime;
+        System.out.printf("Program time: %d ns\n", time);
+        System.out.printf("Program algorithm time: %d ns", time1);
     }
 }

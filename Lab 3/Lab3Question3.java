@@ -106,6 +106,7 @@ public class Lab3Question3
         {
             StringBuilder sb = new StringBuilder();
             int stringLimit = word.length();
+
             while (letterCounter < stringLimit)
             {
                 if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)  //checks if there is a space after the
@@ -162,9 +163,7 @@ public class Lab3Question3
 // Find a key with the highest frequency count.
         String max = "";  //add this as a benchmark
         st.put(max, 0);
-        /*for (String wordOutput : (String[]) (st.keys()))
-            if (st.get(wordOutput) > st.get(max))
-                max = wordOutput;*/
+
         Comparable[] outputArray = st.keys();  //get the list of keys in the dictionary/symbol table
 
         for (int x = 0; x < outputArray.length; x++)  //for all the entries check the highest amount of entry
