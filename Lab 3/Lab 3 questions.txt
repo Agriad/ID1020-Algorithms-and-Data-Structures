@@ -1,0 +1,5 @@
+Question 1:
+see explanation 
+
+Question 2:
+if using the book's algorithm for linear probing has table 3014 will cause the array to have to be resized this might cause it to be slow.

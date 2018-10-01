@@ -11,6 +11,11 @@ Takes the first 100 words and finds how much of each word is used. Uses separate
 
 public class Lab3Question7Point1
 {
+    /* works like this:
+    array = [  ][  ][  ][  ]
+             a1  c2      d3  linked list downwards
+             b1          e1  linked list
+     */
     public class SequentialSearchST<Key, Value>  //does it by using a linked list and adds stuff to the first
     {  // looks like first = 1-->2-->3-->null where 1 is the newest
         private Node first; // first node in the linked list
@@ -55,20 +60,20 @@ public class Lab3Question7Point1
         public SeparateChainingHashST(int M)
         { // Create M linked lists.
             this.M = M;
-            st = (SequentialSearchST<Key, Value>[]) new SequentialSearchST[M];
-            for (int i = 0; i < M; i++)
-                st[i] = new SequentialSearchST();
+            st = (SequentialSearchST<Key, Value>[]) new SequentialSearchST[M];  //makes a sequential search st array of
+            for (int i = 0; i < M; i++)  //size M
+                st[i] = new SequentialSearchST();  //makes a blank sequential search for all the ones in the array
         }
-        private int hash(Key key)
+        private int hash(Key key)  //bitwise and the hash to remove the sign bit then modulo the hash with M
         { return (key.hashCode() & 0x7fffffff) % M; }
 
-        public Value get(Key key)
+        public Value get(Key key)  //finds the specific hash and returns the value
         { return (Value) st[hash(key)].get(key); }
 
-        public void put(Key key, Value val)
+        public void put(Key key, Value val)  //puts the hash into the linked list array thing
         { st[hash(key)].put(key, val); }
 
-        public boolean contains(Key key)
+        public boolean contains(Key key)  //see if it already exist
         {
             Value ans = get(key);
             if (ans == null)
@@ -98,7 +103,6 @@ public class Lab3Question7Point1
         String[] filteredWords = new String[100];
         int counter = 0;
 
-        long startAlgoTime = System.nanoTime();
         while (in.hasNext())  //if next word exist
         {
             String line = in.nextLine();
@@ -106,18 +110,26 @@ public class Lab3Question7Point1
 
             for (int i = 0; i < lineArr.length && counter < 100; i++)  //go through words
             {
-                if (!SCHash.contains(lineArr[i]))  //if new add it in with val 1
-                {
-                    SCHash.put(lineArr[i], 1);
-                    filteredWords[counter] = lineArr[i];
-                    counter++;
-                    //out.println("success");
-                }
-                else
-                {
-                    int val = SCHash.get(lineArr[i]);  //if old just add 1 more to the value
-                    SCHash.put(lineArr[i], val + 1);
-                }
+                filteredWords[counter] = lineArr[i];
+                counter++;
+            }
+        }
+
+        long startAlgoTime = System.nanoTime();
+
+        for (int x = 0; x < filteredWords.length; x++)  //for the words in the array put it in
+        { // Build symbol table and count frequencies.
+            String wordInput = filteredWords[x];
+
+            if (!SCHash.contains(wordInput))
+            {
+                //System.out.printf("input 1: %s, %d\n" ,wordInput , x);
+                SCHash.put(wordInput, 1);
+            }
+            else
+            {
+                //System.out.printf("input 2: %s, %d\n" ,wordInput , x);
+                SCHash.put(wordInput, SCHash.get(wordInput) + 1);
             }
         }
 
