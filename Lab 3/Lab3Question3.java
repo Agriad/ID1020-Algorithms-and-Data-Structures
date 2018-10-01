@@ -3,6 +3,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/*README
+Program from algorithm book
+Takes the first 100 words and finds how much of each word is used. The user can find the nth most used to the xth used
+ */
+
 public class Lab3Question3
 {
     //taken from the algorithm book
@@ -102,12 +107,12 @@ public class Lab3Question3
         int anotherCounter = 0;  //marker for starting to add letters of the word
         String[] filteredWords = new String[limit];  //array to store the extracted words
 
-        while (wordCounter < limit)
+        while (wordCounter < limit)  //word separator
         {
             StringBuilder sb = new StringBuilder();
             int stringLimit = word.length();
 
-            while (letterCounter < stringLimit)
+            while (letterCounter < stringLimit)  //while still need new words
             {
                 if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)  //checks if there is a space after the
                 {//word
@@ -181,17 +186,17 @@ public class Lab3Question3
         System.out.printf("Program time: %d ns\n", time);
 
 
-        String[][] sorted = new String[limit / 2][];
+        String[][] sorted = new String[limit / 2][];  //doesn't need full length as some words have same occurrence
         int putCounter = 1;
         int counterSort = 0;
         int counterInnerSort = 0;
 
-        for (int x = sorted.length; x >= 1; x--)
+        for (int x = sorted.length; x >= 1; x--)  //go through the sorted array from the back
         {
             String[] temp = new String[limit];
-            for (int y = 0; y < outputArray.length; y++)
+            for (int y = 0; y < outputArray.length; y++)  //go through the array in the binary search symbol table
             {
-                if (st.get((String) (outputArray[y])) == x)  //issue is filtered words contain multiple
+                if (st.get((String) (outputArray[y])) == x)  //put in the most used words first
                 {
                     temp[counterInnerSort] = (String) (outputArray[y]);
                     sorted[putCounter] = temp;
@@ -230,7 +235,7 @@ public class Lab3Question3
             else
             {
                 String[] output = new String[limit];
-                String[] numbers = input.split("\\W+");
+                String[] numbers = input.split("\\W+");  //split the input so that you get the numbers
 
                 //System.out.println(numbers[0]);
                 //System.out.println(numbers[1]);
@@ -239,11 +244,11 @@ public class Lab3Question3
                 int outputCounter = 0;
                 max = "";
                 st.put(max, 0);
-                for (int x = 1; x < putCounter; x++)
+                for (int x = 1; x < putCounter; x++)  //check for the different amount of used words
                 {
-                    for (int y = 0; y < sorted[x].length; y++)
+                    for (int y = 0; y < sorted[x].length; y++)  //go through the sorted array
                     {
-                        if ((number1 <= x) && (x <= number2))
+                        if ((number1 <= x) && (x <= number2))  //if between the numbers show it
                         {
                             if(sorted[x][y] != null)
                             {

@@ -3,6 +3,10 @@ import java.io.IOException;
 import java.util.Scanner;
 import static java.lang.System.out;
 
+/*README
+gets a word from the user and shows the character index of all of them.
+ */
+
 public class Lab3Question6
 {
     public static void main(String[] args) throws IOException
@@ -17,19 +21,19 @@ public class Lab3Question6
         int[] index = new int[10000];
         StringBuilder sb = new StringBuilder();
 
-        while (in.hasNext())
+        while (in.hasNext())  //if there is a next line
         {
             String sentence = in.nextLine();
-            for (int i = 0; i < sentence.length(); i++)
+            for (int i = 0; i < sentence.length(); i++)  //goes through the sentence
             {
                 char c = sentence.charAt(i);
                 //out.println(sb.toString());
-                if (c != ' ')
+                if (c != ' ')  //if char not blank build up a string
                 {
                     sb.append(c);
                     //out.println(sb.toString());
                 }
-                else
+                else  //if blank delete the word
                 {
                     String badWord = sb.toString();
                     int deleteBW = badWord.length();
@@ -38,7 +42,7 @@ public class Lab3Question6
 
                 String word = sb.toString();
 
-                if (word.equals(input))
+                if (word.equals(input))  //checks if the words are the same then gets the index and deletes the word
                 {
                     index[inputCounter] = indexCounter - word.length();
                     inputCounter++;
@@ -52,7 +56,7 @@ public class Lab3Question6
 
             String line = sb.toString();
             int deleteLine = line.length();
-            sb.delete(0, deleteLine);
+            sb.delete(0, deleteLine);  //delete the last word
         }
 
         /*
@@ -78,7 +82,7 @@ public class Lab3Question6
 
         out.println("The word " + input + " are in indexes:");
 
-        for (int i = 0; i < inputCounter; i++)
+        for (int i = 0; i < inputCounter; i++)  //goes through the indexes and prints them
         {
             out.println(index[i] + " ");
         }

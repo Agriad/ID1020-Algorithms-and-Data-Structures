@@ -4,6 +4,11 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
+/*README
+program from the algoritm book
+Takes the first 100 words and finds how much of each word is used. Uses linear probing
+ */
+
 public class Lab3Question7Point2
 {
     public class LinearProbingHashST<Key, Value>
@@ -72,25 +77,23 @@ public class Lab3Question7Point2
 
     public static void main(String[] args) throws IOException
     {
-        long startTime = System.nanoTime();
+        long startTime = System.nanoTime(); //start program timer
         Scanner in = new Scanner(new File("TextModified.txt"));
         Lab3Question7Point2 lab = new Lab3Question7Point2();
         Lab3Question7Point2.LinearProbingHashST<String, Integer> LBHash =
-                lab.new LinearProbingHashST<String, Integer>(100);
-        int inputAmount = 0;
-
+                lab.new LinearProbingHashST<String, Integer>(100);  //starting up linear probing has table
         String[] filteredWords = new String[100];
         int counter = 0;
+        long startAlgoTime = System.nanoTime();  //start algo timer
 
-        long startAlgoTime = System.nanoTime();
-        while (counter < 100)
+        while (counter < 100)  //getting the first 100 unique words
         {
-            String line = in.nextLine();
-            String[] lineArr = line.split("\\W+");
+            String line = in.nextLine();  //get the next sentence
+            String[] lineArr = line.split("\\W+");  //spit into words
 
-            for (int i = 0; i < lineArr.length  && counter < 100; i++)
+            for (int i = 0; i < lineArr.length  && counter < 100; i++)  //go through words
             {
-                if (!LBHash.contains(lineArr[i]))
+                if (!LBHash.contains(lineArr[i]))  //if new add it in with val 1
                 {
                     LBHash.put(lineArr[i], 1);
                     filteredWords[counter] = lineArr[i];
@@ -100,7 +103,7 @@ public class Lab3Question7Point2
                 }
                 else
                 {
-                    int val = LBHash.get(lineArr[i]);
+                    int val = LBHash.get(lineArr[i]);  //if old just add 1 more to the value
                     LBHash.put(lineArr[i], val + 1);
                     //out.println("not success");
                     //out.println(counter);
@@ -111,7 +114,8 @@ public class Lab3Question7Point2
 
         //out.println(counter);
         //out.println("onion");
-
+        long outputTime = System.nanoTime();
+        long outputTimeMill = System.currentTimeMillis();
         String max = "";  //add this as a benchmark
         LBHash.put(max, 0);
 
@@ -126,9 +130,14 @@ public class Lab3Question7Point2
 
         System.out.println(max + " " + LBHash.get(max));
         long endTime = System.nanoTime();
+        long endTimeMill = System.currentTimeMillis();
         long time = endTime - startTime;
         long time1 = endTime - startAlgoTime;
+        long time2 = endTime - outputTime;
+        long time3 = endTimeMill - outputTimeMill;
         System.out.printf("Program time: %d ns\n", time);
-        System.out.printf("Program algorithm time: %d ns", time1);
+        System.out.printf("Program algorithm time: %d ns\n", time1);
+        System.out.printf("Program algorithm output time: %d ns\n", time2);
+        System.out.printf("Program algorithm output time: %d ms", time3);
     }
 }

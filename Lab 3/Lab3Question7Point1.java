@@ -4,10 +4,15 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
+/*README
+program from the algorithm book
+Takes the first 100 words and finds how much of each word is used. Uses separate chaining
+ */
+
 public class Lab3Question7Point1
 {
-    public class SequentialSearchST<Key, Value>
-    {
+    public class SequentialSearchST<Key, Value>  //does it by using a linked list and adds stuff to the first
+    {  // looks like first = 1-->2-->3-->null where 1 is the newest
         private Node first; // first node in the linked list
         private class Node
         { // linked-list node
@@ -45,7 +50,7 @@ public class Lab3Question7Point1
         private SequentialSearchST<Key, Value>[] st; // array of ST objects
 
         public SeparateChainingHashST()
-        { this(997); }
+        { this(997); }  //calls the SeparateChainingHashST with int 997
 
         public SeparateChainingHashST(int M)
         { // Create M linked lists.
@@ -94,14 +99,14 @@ public class Lab3Question7Point1
         int counter = 0;
 
         long startAlgoTime = System.nanoTime();
-        while (in.hasNext())
+        while (in.hasNext())  //if next word exist
         {
             String line = in.nextLine();
-            String[] lineArr = line.split("\\W+");
+            String[] lineArr = line.split("\\W+");  //splits into word
 
-            for (int i = 0; i < lineArr.length && counter < 100; i++)
+            for (int i = 0; i < lineArr.length && counter < 100; i++)  //go through words
             {
-                if (!SCHash.contains(lineArr[i]))
+                if (!SCHash.contains(lineArr[i]))  //if new add it in with val 1
                 {
                     SCHash.put(lineArr[i], 1);
                     filteredWords[counter] = lineArr[i];
@@ -110,12 +115,13 @@ public class Lab3Question7Point1
                 }
                 else
                 {
-                    int val = SCHash.get(lineArr[i]);
+                    int val = SCHash.get(lineArr[i]);  //if old just add 1 more to the value
                     SCHash.put(lineArr[i], val + 1);
                 }
             }
         }
 
+        long outputTime = System.nanoTime();
         String max = "";  //add this as a benchmark
         SCHash.put(max, 0);
 
@@ -132,7 +138,9 @@ public class Lab3Question7Point1
         long endTime = System.nanoTime();
         long time = endTime - startTime;
         long time1 = endTime - startAlgoTime;
+        long time2 = endTime - outputTime;
         System.out.printf("Program time: %d ns\n", time);
-        System.out.printf("Program algorithm time: %d ns", time1);
+        System.out.printf("Program algorithm time: %d ns\n", time1);
+        System.out.printf("Program algorithm output time: %d ns", time2);
     }
 }

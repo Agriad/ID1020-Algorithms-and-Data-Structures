@@ -2,6 +2,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+/*README
+Program from algorithm book
+A red black tree so that it becomes balanced always. Takes the first 100 words and finds how much of each word is used.
+ */
+
 public class Lab3Question4
 {
     public class RedBlackBST<Key extends Comparable<Key>, Value>
@@ -214,12 +219,12 @@ public class Lab3Question4
         int anotherCounter = 0;  //marker for starting to add letters of the word
         String[] filteredWords = new String[limit];  //array to store the extracted words
 
-        while (wordCounter < limit)
+        while (wordCounter < limit)  //word separator
         {
             StringBuilder sb = new StringBuilder();
             int stringLimit = word.length();
 
-            while (letterCounter < stringLimit)
+            while (letterCounter < stringLimit)  //while still need new words
             {
                 if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)  //checks if there is a space after the
                 {//word
@@ -277,6 +282,7 @@ public class Lab3Question4
         }
 
 // Find a key with the highest frequency count.
+        long outputTime = System.nanoTime();
         String max = "";
         st.put(max, 0);
 
@@ -293,7 +299,9 @@ public class Lab3Question4
         long endTime = System.nanoTime();
         long time = endTime - startTime;
         long time1 = endTime - startAlgoTime;
+        long time2 = endTime - outputTime;
         System.out.printf("Program time: %d ns\n", time);
         System.out.printf("Program algorithm time: %d ns", time1);
+        System.out.printf("Program algorithm output time: %d ns", time2);
     }
 }

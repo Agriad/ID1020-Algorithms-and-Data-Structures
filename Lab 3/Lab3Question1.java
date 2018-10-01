@@ -3,6 +3,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileWriter;
 
+/*README
+Programs takes in a text file and turns all non alphabetic or blank spaces as blank
+ */
+
 public class Lab3Question1
 {
     public void textFilter(String text) throws IOException  //throws exception so that it can complain if it
@@ -23,7 +27,7 @@ public class Lab3Question1
                 Character c = line.charAt(x);
                 x++;
 
-                if (!((Character.isAlphabetic(c)) || (c == ' ')))
+                if (!((Character.isAlphabetic(c)) || (c == ' ')))  //if not alphabetic or is blank
                 {
                     fr.append(' ');
                 }
