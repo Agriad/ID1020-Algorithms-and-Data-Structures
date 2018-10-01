@@ -23,13 +23,14 @@ public class test {
             vals = (Value[]) new Object[m];
         }
 
+        /*
         public int size() {
             return n;
         }
 
         public boolean isEmpty() {
             return size() == 0;
-        }
+        }*/
 
         public boolean contains(Key key) {
             if (key == null) throw new IllegalArgumentException("argument to contains() is null");
