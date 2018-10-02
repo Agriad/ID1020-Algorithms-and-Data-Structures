@@ -99,7 +99,7 @@ public class Lab3Question3
         long startTime = System.nanoTime();
         Scanner in = new Scanner(new File("TextModified.txt"));
         Lab3Question3 lab = new Lab3Question3();
-        int limit = 100;  //limit of the amount of words
+        int limit = 150000;  //limit of the amount of words
         String word = in.nextLine();
         int wordCounter = 0;  //counter for 100 words
         int letterCounter = 0;  //counter so that it stays in the line
@@ -107,7 +107,7 @@ public class Lab3Question3
         int anotherCounter = 0;  //marker for starting to add letters of the word
         String[] filteredWords = new String[limit];  //array to store the extracted words
 
-        while (wordCounter < limit)  //word separator
+        while (in.hasNextLine())  //word separator
         {
             StringBuilder sb = new StringBuilder();
             int stringLimit = word.length();
@@ -145,14 +145,17 @@ public class Lab3Question3
                 letterCounter++;  //increment the pointer for the line
             }
 
-            letterCounter = 0;  //reset for the next line
-            word = in.nextLine();
+            letterCounter = 0;  //reset for the next line'
+            if (in.hasNextLine())
+            {
+                word = in.nextLine();
+            }
         }
 
         Lab3Question3.BinarySearchST<String, Integer> st =
                 lab.new BinarySearchST  <String, Integer>(limit);
 
-        for (int x = 0; x < filteredWords.length; x++)  //for the words in the array put it in
+        for (int x = 0; x < wordCounter; x++)  //for the words in the array put it in
         { // Build symbol table and count frequencies.
             String wordInput = filteredWords[x];
 
@@ -196,6 +199,7 @@ public class Lab3Question3
             String[] temp = new String[limit];
             for (int y = 0; y < outputArray.length; y++)  //go through the array in the binary search symbol table
             {
+                //System.out.println(x);
                 if (st.get((String) (outputArray[y])) == x)  //put in the most used words first
                 {
                     temp[counterInnerSort] = (String) (outputArray[y]);

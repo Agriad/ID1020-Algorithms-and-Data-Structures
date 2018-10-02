@@ -1,5 +1,6 @@
 Question 1:
-see explanation 
+See explanation 
+Would result in a balanced tree for both but the red black tree takes longer due to rotations.
 
 Question 2:
 If using the book's algorithm for linear probing hash table, 3014 will cause the array to have to be resized, this might cause it to be slow.
@@ -57,12 +58,13 @@ Program algorithm output time: 35421121 ns
 
 Question 3:
 show explanation
+The program takes in a line from the text files and goes through it character by character. It sees if it is an alphabet or blank. If it isn't then it would replace it with a blank. It then outputs it into a new file.
 
 Question 4:
 I used system nano time to show the time of the algorithm. From my output the binary search symbol table ran quicker than the binary search tree. Although according to the time complexity binary search symbol table has a better guarantee on but binary search tree has a better average case.
 
 Question 5:
-I used a binary search symbol table as it uses an array and as such is easier to copy to use for the comparison.
+I used a binary search symbol table as it uses an array and as such is easier to copy to use for the comparison. After the frequency counter is done it would get the array and put it into a 2d array that rearranges it in the most common to the least common word. From there it would go to an infinite loop until stopped where the user can search for the N to the X most common word.
 
 Question 6:
 
@@ -83,7 +85,11 @@ Process finished with exit code 0
 Theoretically this should be the case as a red black tree balances itself while a binary search tree is at the mercy of the input order. As such a BST can have uneven trees which will reduce the efficiency of inputting and searching. Although the RBT is slower in inputting a key it makes it up by having it balanced and making it quicker to input and search.
 
 Question 7:
+The programs extracts each words and puts it through a hash algoritm then a frequency counter before putting it into a binary search symbol table. It then takes the inputs and shows it as hashes and the amount of times it is put in as stars. The program does not differentiate between duplicate words or collisions.
 
 Question 8:
+The programs takes in a word from the user and searches the text with a counter. It detects the same word by building the characters into words to check with the input. If a match is detected it would print out the character index of the word.
 
 Question 9:
+The test program is using the frequency counter of the first 100 words of the file.
+Theoretically both should have the same time for the guarantee and the average case. In the experiment the linear probing hash table was faster.

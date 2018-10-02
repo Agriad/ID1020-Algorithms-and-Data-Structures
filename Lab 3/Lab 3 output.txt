@@ -16,14 +16,21 @@ Program algorithm output time: 29976876 ns
 Process finished with exit code 0
 
 Question 3:
-of 6
-Program time: 213023145 ns
+the 7577
+Program time: 4106787006 ns
 To exit type abc
 Type 2 numbers "N X" to check for the Nth to the Xth most used word
 1 2
-of 6
-A 4
-the 4
+the 7577
+and 4921
+To exit type abc
+Type 2 numbers "N X" to check for the Nth to the Xth most used word
+1 5
+the 7577
+and 4921
+of 4102
+to 3599
+a 2864
 To exit type abc
 Type 2 numbers "N X" to check for the Nth to the Xth most used word
 abc
