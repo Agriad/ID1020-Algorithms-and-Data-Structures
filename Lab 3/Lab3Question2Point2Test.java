@@ -2,12 +2,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import static java.lang.System.out;
+
 /*README
 Program from algorithm book
 Takes in first 100 words and finds the most used word. Does so by storing in a binary search tree.
  */
 
-public class Lab3Question2Point2
+public class Lab3Question2Point2Test
 {
 
     public class BST<Key extends Comparable<Key>, Value>
@@ -105,7 +107,7 @@ public class Lab3Question2Point2
 
             //System.out.println("out");
             return (x);  //just return the node
-    }
+        }
 
 // See page 399.
 // See page 407 for min(), max(), floor(), and ceiling().
@@ -119,67 +121,29 @@ public class Lab3Question2Point2
     {
         long startTime = System.nanoTime();
         Scanner in = new Scanner(new File("TextModified.txt"));
-        Lab3Question2Point2 lab = new Lab3Question2Point2();
-        //int limit = 10000000;
-        int limit = 100;
-        String word = in.nextLine();
-        int wordCounter = 0;  //counter for 100 words
-        int letterCounter = 0;  //counter so that it stays in the line
-        int spaceCounter = 0;  //marker for the space after the word
-        int anotherCounter = 0;  //marker for starting to add letters of the word
-        String[] filteredWords = new String[limit];  //array to store the extracted words
+        Lab3Question2Point2Test lab = new Lab3Question2Point2Test();
+        int inputCounter = 0;
+        String[] filteredWords = new String[1000000];
+        StringBuilder sb = new StringBuilder();
 
-        while (wordCounter < limit)  //word separator
+        while (in.hasNext())
         {
-            StringBuilder sb = new StringBuilder();
-            int stringLimit = word.length();
+            String line = in.nextLine();
+            String[] lineArr = line.split("\\W+");
 
-            while (letterCounter < stringLimit)  //while still need new words
+            for (int i = 0; i < lineArr.length; i++)
             {
-                if (word.charAt(letterCounter) == ' ' && anotherCounter != 0)  //checks if there is a space after the
-                {//word
-                    spaceCounter++;  //marks a space if found after a word
-                }
-                else if (word.charAt(letterCounter) != ' ')  //if a letter add it
-                {
-                    sb.append(word.charAt(letterCounter));
-                    anotherCounter++;  //marks that a word is found
-                    if (letterCounter == stringLimit - 1)
-                    {
-                        spaceCounter++;  //if at the end of the line and a letter is there mark it so that it can write
-                    }
-                }
-                if (spaceCounter != 0)  //if a space after the word is found make it into a string and put it in the
-                {//array
-                    //System.out.println(sb.toString());  //replace with inserting
-                    if (wordCounter < limit)  //prevent overfilling the array at the last line
-                    {
-                        //System.out.println(sb.toString());
-                        filteredWords[wordCounter] = sb.toString();
-                    }
-                    int delete = sb.length();  //reset for the next word
-                    sb.delete(0, delete);
-                    anotherCounter = 0;
-                    spaceCounter = 0;
-                    wordCounter++;
-                }
-
-                letterCounter++;  //increment the pointer for the line
-            }
-
-            letterCounter = 0;  //reset for the next line
-            //System.out.println(wordCounter);
-            if (in.hasNextLine())
-            {
-                word = in.nextLine();
+                //out.println(lineArr[i]);
+                filteredWords[inputCounter] = lineArr[i];
+                inputCounter++;
             }
         }
 
         long startAlgoTime = System.nanoTime();
-        Lab3Question2Point2.BST<String, Integer> st =
+        Lab3Question2Point2Test.BST<String, Integer> st =
                 lab.new BST<String, Integer>();
 
-        for (int x = 0; x < filteredWords.length; x++)  //for the words in the array put it in
+        for (int x = 0; x < inputCounter; x++)  //for the words in the array put it in
         { // Build symbol table and count frequencies.
             String wordInput = filteredWords[x];
 
@@ -200,7 +164,7 @@ public class Lab3Question2Point2
         String max = "";
         st.put(max, 0);
 
-        for (int x = 0; x < filteredWords.length; x++)  //for all the input check the highest amount of entry
+        for (int x = 0; x < inputCounter; x++)  //for all the input check the highest amount of entry
         {
             //System.out.println(filteredWords[x] + ' ' + st.get(filteredWords[x]));
             if (st.get(filteredWords[x]) > st.get(max))  //if bigger than

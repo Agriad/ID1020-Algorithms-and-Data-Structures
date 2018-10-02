@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class test {
 
     public class LinearProbingHashST<Key, Value> {
-        private static final int INIT_CAPACITY = 4;
+        private static final int INIT_CAPACITY = 4711;
 
         private int n;           // number of key-value pairs in the symbol table
         private int m;           // size of linear probing table
@@ -130,27 +130,43 @@ public class test {
                 lab.new LinearProbingHashST<String, Integer>();
         int inputAmount = 0;
 
-        String[] filteredWords = new String[100];
+        int limit = 2001;
+
+        String[] filteredWords = new String[limit];
         int counter = 0;
 
-        long startAlgoTime = System.nanoTime();
-        while (in.hasNext()) {
-            String line = in.nextLine();
-            String[] lineArr = line.split("\\W+");
+        while (counter < limit)  //getting the first 100 unique words
+        {
+            String line = in.nextLine();  //get the next sentence
+            String[] lineArr = line.split("\\W+");  //spit into words
 
-            for (int i = 0; i < lineArr.length && counter < 100; i++) {
-                if (!LBHash.contains(lineArr[i])) {
-                    LBHash.put(lineArr[i], 1);
-                    filteredWords[counter] = lineArr[i];
-                    counter++;
-                    //out.println("success");
-                } else {
-                    int val = LBHash.get(lineArr[i]);
-                    LBHash.put(lineArr[i], val + 1);
-                }
+            for (int i = 0; i < lineArr.length  && counter < limit; i++)  //go through words
+            {
+                filteredWords[counter] = lineArr[i];
+                counter++;
+            }
+            //out.println(counter);
+        }
+
+        long startAlgoTime = System.nanoTime();
+
+        for (int x = 0; x < filteredWords.length; x++)  //for the words in the array put it in
+        { // Build symbol table and count frequencies.
+            String wordInput = filteredWords[x];
+
+            if (!LBHash.contains(wordInput))
+            {
+                //System.out.printf("input 1: %s, %d\n" ,wordInput , x);
+                LBHash.put(wordInput, 1);
+            }
+            else
+            {
+                //System.out.printf("input 2: %s, %d\n" ,wordInput , x);
+                LBHash.put(wordInput, LBHash.get(wordInput) + 1);
             }
         }
 
+        long outputTime = System.nanoTime();
         String max = "";  //add this as a benchmark
         LBHash.put(max, 0);
 
@@ -167,8 +183,10 @@ public class test {
         long endTime = System.nanoTime();
         long time = endTime - startTime;
         long time1 = endTime - startAlgoTime;
+        long time2 = endTime - outputTime;
         System.out.printf("Program time: %d ns\n", time);
-        System.out.printf("Program algorithm time: %d ns", time1);
+        System.out.printf("Program algorithm time: %d ns\n", time1);
+        System.out.printf("Program algorithm output time: %d ns\n", time2);
     }
 
 

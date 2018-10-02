@@ -189,7 +189,7 @@ public class Lab3Question2Point1
         long time1 = endTime - startAlgoTime;
         long time2 = endTime - outputTime;
         System.out.printf("Program time total: %d ns\n", time);
-        System.out.printf("Program algorithm time: %d ns", time1);
+        System.out.printf("Program algorithm time: %d ns\n", time1);
         System.out.printf("Program algorithm output time: %d ns", time2);
     }
 }

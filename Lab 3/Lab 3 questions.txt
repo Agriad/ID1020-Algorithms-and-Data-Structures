@@ -2,4 +2,88 @@ Question 1:
 see explanation 
 
 Question 2:
-if using the book's algorithm for linear probing has table 3014 will cause the array to have to be resized this might cause it to be slow.
+If using the book's algorithm for linear probing hash table, 3014 will cause the array to have to be resized, this might cause it to be slow.
+Using 4712 is also not that great as when hashing you want to reduce collisions. Using a non prime number does not guarantee that the number produced in a modulo operation is "unique" as in only one operation goes to that number. Since it is a multiple of 2 that means that there are lots of numbers that it is divisible by.
+Using 4711 and 4713 is also not that great as it is not a prime number but instead a product of 2 prime numbers. In experimental testing it seems that these 2 numbers produce better results with an input of 2000. When the input was 2001 though there was no real difference though.
+Basically all of them are not that good.
+
+input 2000 size 3014
+the 147
+Program time: 118416742 ns
+Program algorithm time: 35906622 ns
+Program algorithm output time: 33800199 ns
+
+input 2001 size 3014
+the 148
+Program time: 121656693 ns
+Program algorithm time: 35343205 ns
+Program algorithm output time: 33515772 ns
+
+input 2000 size 4711
+the 147
+Program time: 112016166 ns
+Program algorithm time: 34197755 ns
+Program algorithm output time: 32223766 ns
+
+input 2001 size 4711
+the 148
+Program time: 115009654 ns
+Program algorithm time: 36565227 ns
+Program algorithm output time: 34570319 ns
+
+input 2000 size 4712
+the 147
+Program time: 123872804 ns
+Program algorithm time: 37493588 ns
+Program algorithm output time: 35381194 ns
+
+input 2001 size 4712
+the 148
+Program time: 114422034 ns
+Program algorithm time: 36287502 ns
+Program algorithm output time: 34073090 ns
+
+input 2000 size 4713
+the 147
+Program time: 113316260 ns
+Program algorithm time: 34771346 ns
+Program algorithm output time: 32591283 ns
+
+input 2001 size 4713
+the 148
+Program time: 116601579 ns
+Program algorithm time: 37371744 ns
+Program algorithm output time: 35421121 ns
+
+Question 3:
+show explanation
+
+Question 4:
+I used system nano time to show the time of the algorithm. From my output the binary search symbol table ran quicker than the binary search tree. Although according to the time complexity binary search symbol table has a better guarantee on but binary search tree has a better average case.
+
+Question 5:
+I used a binary search symbol table as it uses an array and as such is easier to copy to use for the comparison.
+
+Question 6:
+
+Binary search tree
+the 7577
+Program time: 652330175 ns
+Program algorithm time: 314798331 ns
+Program algorithm output time: 87134927 ns
+Process finished with exit code 0
+
+Red black tree
+the 7577
+Program time: 560096280 ns
+Program algorithm time: 251959514 ns
+Program algorithm output time: 72215551 ns
+Process finished with exit code 0
+
+Theoretically this should be the case as a red black tree balances itself while a binary search tree is at the mercy of the input order. As such a BST can have uneven trees which will reduce the efficiency of inputting and searching. Although the RBT is slower in inputting a key it makes it up by having it balanced and making it quicker to input and search.
+
+Question 7:
+
+Question 8:
+
+Question 9:

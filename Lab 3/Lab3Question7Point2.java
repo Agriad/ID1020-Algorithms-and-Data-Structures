@@ -45,9 +45,9 @@ public class Lab3Question7Point2
         {
             if (N >= M/2) resize(2*M); // double M (see text)  if halfway filled doubles the size
             int i;
-            for (i = hash(key); keys[i] != null; i = (i + 1) % M)
-                if (keys[i].equals(key)) { vals[i] = val; return; }
-            keys[i] = key;
+            for (i = hash(key); keys[i] != null; i = (i + 1) % M)  //uses hash as index, if out of array modulo with the
+                if (keys[i].equals(key)) { vals[i] = val; return; }  //size of the array to look for a space in the
+            keys[i] = key;  //front
             vals[i] = val;
             N++;
             //out.println("coconut");
@@ -55,8 +55,8 @@ public class Lab3Question7Point2
 
         public Value get(Key key)  //gets the key
         {
-            for (int i = hash(key); keys[i] != null; i = (i + 1) % M)
-                if (keys[i].equals(key))
+            for (int i = hash(key); keys[i] != null; i = (i + 1) % M)  //uses hash as index, if out of array modulo with
+                if (keys[i].equals(key))  //the size of the array to look for a space in the front
                     return vals[i];
             return null;
         }

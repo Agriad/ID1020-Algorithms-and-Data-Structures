@@ -3,14 +3,16 @@ no output
 
 Question 2.1:
 of 6
-Program time total: 230028140 ns
-Program algorithm time: 57768003 nsProgram algorithm output time: 28177518 ns
+Program time total: 89887765 ns
+Program algorithm time: 29577209 ns
+Program algorithm output time: 28508602 ns
 Process finished with exit code 0
 
 Question 2.2:
 of 6
-Program time: 393316007 ns
-Program algorithm time: 339007509 nsProgram algorithm output time: 21080535 ns
+Program time: 103591328 ns
+Program algorithm time: 31990360 ns
+Program algorithm output time: 29976876 ns
 Process finished with exit code 0
 
 Question 3:
