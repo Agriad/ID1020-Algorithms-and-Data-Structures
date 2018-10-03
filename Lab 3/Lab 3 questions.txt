@@ -4,7 +4,7 @@ Would result in a balanced tree for both but the red black tree takes longer due
 
 Question 2:
 If using the book's algorithm for linear probing hash table, 3014 will cause the array to have to be resized, this might cause it to be slow.
-Using 4712 is also not that great as when hashing you want to reduce collisions. Using a non prime number does not guarantee that the number produced in a modulo operation is "unique" as in only one operation goes to that number. Since it is a multiple of 2 that means that there are lots of numbers that it is divisible by.
+Using 4712 is also not that great as when hashing you want to reduce collisions. Using a non prime number does not guarantee that the number produced in a modulo operation is "unique" as in only one operation goes to that number. Since it is a multiple of 2 that means that there are lots of numbers that it is divisible by it.
 Using 4711 and 4713 is also not that great as it is not a prime number but instead a product of 2 prime numbers. In experimental testing it seems that these 2 numbers produce better results with an input of 2000. When the input was 2001 though there was no real difference though.
 Basically all of them are not that good.
 
