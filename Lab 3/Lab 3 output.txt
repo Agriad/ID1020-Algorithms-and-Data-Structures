@@ -1,5 +1,6 @@
 Question 1:
 no output
+output as a text file
 
 Question 2.1:
 of 6
