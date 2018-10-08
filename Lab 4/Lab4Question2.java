@@ -5,15 +5,15 @@ import java.util.Iterator;
 
 import static java.lang.System.out;
 
-public class Lab4Question1
+public class Lab4Question2
 {
     public class Bag<Item> implements Iterable<Item>
     {
         private Node first; // first node in list
-        private class Node  // uses node to store items in bag
+        private class Node
         {
-            Item item;  // stores the item
-            Node next;  // what the next item is so it can iterate
+            Item item;
+            Node next;
         }
         public void add(Item item)
         { // same as push() in Stack
@@ -22,9 +22,9 @@ public class Lab4Question1
             first.item = item;
             first.next = oldfirst;
         }
-        public Iterator<Item> iterator()  //basic iterator
+        public Iterator<Item> iterator()
         { return new ListIterator(); }
-        private class ListIterator implements Iterator<Item>  //specific iterator for this type
+        private class ListIterator implements Iterator<Item>
         {
             private Node current = first;
             public boolean hasNext()
@@ -45,7 +45,7 @@ public class Lab4Question1
         private final int V; // number of vertices
         private int E; // number of edges
         private Bag<Integer>[] adj; // adjacency lists
-        public Graph(int V)  //constructor
+        public Graph(int V)
         {
             this.V = V; this.E = 0;
             adj = (Bag<Integer>[]) new Bag[V]; // Create array of lists.
@@ -61,16 +61,17 @@ public class Lab4Question1
 
             adj[v].add(w); // Add w to v’s list.
             adj[w].add(v); // Add v to w’s list.
-            E++;  //add e
+            E++;
         }
-        public Iterable<Integer> adj(int v)  //returns list of adjacent nodes
+        public Iterable<Integer> adj(int v)
         { return adj[v]; }
     }
 
-    public class Stack<Item> implements Iterable<Item>
+    public class Queue<Item> implements Iterable<Item>
     {
-        private Node first; // top of stack (most recently added node)
-        private int N; // number of items
+        private Node first; // link to least recently added node
+        private Node last; // link to most recently added node
+        private int N; // number of items on the queue
         private class Node
         { // nested class to define nodes
             Item item;
@@ -78,25 +79,28 @@ public class Lab4Question1
         }
         public boolean isEmpty() { return first == null; } // Or: N == 0.
         public int size() { return N; }
-        public void push(Item item)
-        { // Add item to top of stack.
-            Node oldfirst = first;
-            first = new Node();
-            first.item = item;
-            first.next = oldfirst;
+        public void enqueue(Item item)
+        { // Add item to the end of the list.
+            Node oldlast = last;
+            last = new Node();
+            last.item = item;
+            last.next = null;
+            if (isEmpty()) first = last;
+            else oldlast.next = last;
             N++;
         }
-        public Item pop()
-        { // Remove item from top of stack.
+        public Item dequeue()
+        { // Remove item from the beginning of the list.
             Item item = first.item;
             first = first.next;
+            if (isEmpty()) last = null;
             N--;
             return item;
         }
 
-        public Iterator<Item> iterator()  //basic iterator
+        public Iterator<Item> iterator()
         { return new ListIterator(); }
-        private class ListIterator implements Iterator<Item>  //specific iterator for this type
+        private class ListIterator implements Iterator<Item>
         {
             private Node current = first;
             public boolean hasNext()
@@ -110,59 +114,60 @@ public class Lab4Question1
             }
         }
 // See page 155 for iterator() implementation.
-// See page 147 for test client main().
+// See page 150 for test client main().
     }
 
-    public class DepthFirstPaths
+    public class BreadthFirstPaths
     {
-        private boolean[] marked; // Has dfs() been called for this vertex?
+        private boolean[] marked; // Is a shortest path to this vertex known?
         private int[] edgeTo; // last vertex on known path to this vertex
         private final int s; // source
-        private int lastNode;
-        public DepthFirstPaths(Graph G, int s)
+        public BreadthFirstPaths(Graph G, int s)
         {
-            marked = new boolean[G.V()];  //vertices in graph
-            edgeTo = new int[G.V()];  //vertices in graph
+            marked = new boolean[G.V()];
+            edgeTo = new int[G.V()];
             this.s = s;
-            dfs(G, s);  //call dfs from "root"/start
+            bfs(G, s);
         }
-        private void dfs(Graph G, int v)
+        private void bfs(Graph G, int s)
         {
-            marked[v] = true;  //mark "root" as true
-            lastNode = v;
-            for (int w : G.adj(v))  //for the adjacent vertices
-                if (!marked[w])  //if not visited
-                {
-                    edgeTo[w] = v;  //parent is previous node
-                    dfs(G, w);  //send kid node as parent node
-                }
+            Queue<Integer> queue = new Queue<Integer>();
+            marked[s] = true; // Mark the source
+            queue.enqueue(s); // and put it on the queue.
+            while (!queue.isEmpty())
+            {
+                int v = queue.dequeue(); // Remove next vertex from the queue.
+                for (int w : G.adj(v))
+                    if (!marked[w]) // For every unmarked adjacent vertex,
+                    {
+                        edgeTo[w] = v; // save last edge on a shortest path,
+                        marked[w] = true; // mark it because path is known,
+                        queue.enqueue(w); // and add it to the queue.
+                    }
+            }
         }
         public boolean hasPathTo(int v)
         { return marked[v]; }
-        public Iterable<Integer> pathTo(int v)  //from "root" to v
-        {
-            if (!hasPathTo(v))  //if no path
-            {
-                return null;
-            }
-            Stack<Integer> path = new Stack<Integer>();
-            for (int x = v; x != s; x = edgeTo[x])  //x is v, if x not root,
-            {
-                path.push(x);
-            }
-            path.push(s);
 
+        public Iterable<Integer> pathTo(int v)
+        {
+            if (!hasPathTo(v)) return null;
+            Queue<Integer> path = new Queue<Integer>();
+            for (int x = v; x != s; x = edgeTo[x])
+                path.enqueue(x);
+            path.enqueue(s);
             return path;
         }
+// Same as for DFS (see page 536).
     }
 
     public static void main(String[] args) throws IOException
     {
         Scanner in = new Scanner(new File("Text.txt"));
-        Lab4Question1 lab = new Lab4Question1();
+        Lab4Question2 lab = new Lab4Question2();
         int limit = 49;
         String[] indexName = new String[limit];
-        Lab4Question1.Graph graph = lab.new Graph(limit);
+        Lab4Question2.Graph graph = lab.new Graph(limit);
         int count = 0;
         int count2 = 0;
         int counter = 0;
@@ -259,9 +264,9 @@ public class Lab4Question1
             }
         }
 
-        Lab4Question1.DepthFirstPaths dfp = lab.new DepthFirstPaths(graph, state1);
+        Lab4Question2.BreadthFirstPaths bfp = lab.new BreadthFirstPaths(graph, state1);
 
-        Iterable path = dfp.pathTo(state2);
+        Iterable path = bfp.pathTo(state2);
 
         for (Object i : path)
         {
@@ -271,15 +276,4 @@ public class Lab4Question1
     }
 }
 
-/*
-public void GraphIn(String in)
-        {
 
-        this.E = E++; // Read E.
-        for (int i = 0; i < E; i++)
-        { // Add an edge.
-        int v = in.readInt(); // Read a vertex,
-        int w = in.readInt(); // read another vertex,
-        addEdge(v, w); // and add edge connecting them.
-        }
-        }*/
