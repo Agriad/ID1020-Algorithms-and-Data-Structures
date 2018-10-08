@@ -1,4 +1,4 @@
-/*import java.io.File;
+import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.Iterator;
@@ -52,6 +52,16 @@ public class Lab4Question3
             this.weight = weight;
         }
 
+        public Integer v()
+        {
+            return (this.v);
+        }
+
+        public Integer w()
+        {
+            return (this.w);
+        }
+
         public int weight()
         {
             return (weight);
@@ -74,11 +84,11 @@ public class Lab4Question3
         public int V() { return V; }
         public int E() { return E; }
 
-        public void addEdge(EdgeWeight v, EdgeWeight w)
+        public void addEdge(int v, int w, int weight)
         {
-
-            adj[v].add(w); // Add w to v’s list.
-            adj[w].add(v); // Add v to w’s list.
+            EdgeWeight ew = new EdgeWeight(v, w, weight);
+            adj[v].add(ew); // Add w to v’s list.
+            adj[w].add(ew); // Add v to w’s list.
             E++;
         }
         public Iterable<EdgeWeight> adj(int v)
@@ -152,15 +162,16 @@ public class Lab4Question3
             Queue<Integer> queue = new Queue<Integer>();
             marked[s] = true; // Mark the source
             queue.enqueue(s); // and put it on the queue.
+            Integer wNum;
             while (!queue.isEmpty())
             {
                 int v = queue.dequeue(); // Remove next vertex from the queue.
-                for (int w : G.adj(v))
-                    if (!marked[w]) // For every unmarked adjacent vertex,
+                for (EdgeWeight w : G.adj(v))
+                    if (!marked[wNum = w.w()]) // For every unmarked adjacent vertex,
                     {
-                        edgeTo[w] = v; // save last edge on a shortest path,
-                        marked[w] = true; // mark it because path is known,
-                        queue.enqueue(w); // and add it to the queue.
+                        edgeTo[wNum] = v; // save last edge on a shortest path,
+                        marked[wNum] = true; // mark it because path is known,
+                        queue.enqueue(wNum); // and add it to the queue.
                     }
             }
         }
@@ -191,6 +202,7 @@ public class Lab4Question3
         int counter = 0;
         int state1 = 0;
         int state2 = 0;
+        int weight = 1;
 
         while (in.hasNext())
         {
@@ -233,7 +245,8 @@ public class Lab4Question3
                 }
             }
 
-            graph.addEdge(state1, state2);
+            graph.addEdge(state1, state2, weight);
+            weight++;
         }
 
         Iterable[] iter = new Iterable[limit];
@@ -252,7 +265,6 @@ public class Lab4Question3
             {
                 //out.println(j.toString());
                 //out.println(indexName[Integer.getInteger(j.toString())]);
-
                 out.println(indexName[(Integer) (j)]);
                 edgeCounter++;
             }
@@ -292,7 +304,7 @@ public class Lab4Question3
         }
 
     }
-}*/
+}
 
 
 
