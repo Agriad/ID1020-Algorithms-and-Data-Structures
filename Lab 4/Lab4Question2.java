@@ -10,10 +10,10 @@ public class Lab4Question2
     public class Bag<Item> implements Iterable<Item>
     {
         private Node first; // first node in list
-        private class Node
+        private class Node  // uses node to store items in bag
         {
-            Item item;
-            Node next;
+            Item item;  // stores the item
+            Node next;  // what the next item is so it can iterate
         }
         public void add(Item item)
         { // same as push() in Stack
@@ -22,9 +22,9 @@ public class Lab4Question2
             first.item = item;
             first.next = oldfirst;
         }
-        public Iterator<Item> iterator()
+        public Iterator<Item> iterator()  //basic iterator
         { return new ListIterator(); }
-        private class ListIterator implements Iterator<Item>
+        private class ListIterator implements Iterator<Item>  //specific iterator for this type
         {
             private Node current = first;
             public boolean hasNext()
@@ -39,13 +39,12 @@ public class Lab4Question2
         }
     }
 
-
     public class Graph
     {
         private final int V; // number of vertices
         private int E; // number of edges
         private Bag<Integer>[] adj; // adjacency lists
-        public Graph(int V)
+        public Graph(int V)  //constructor
         {
             this.V = V; this.E = 0;
             adj = (Bag<Integer>[]) new Bag[V]; // Create array of lists.
@@ -58,7 +57,6 @@ public class Lab4Question2
 
         public void addEdge(int v, int w)
         {
-
             adj[v].add(w); // Add w to v’s list.
             adj[w].add(v); // Add v to w’s list.
             E++;
@@ -68,7 +66,7 @@ public class Lab4Question2
     }
 
     public class Queue<Item> implements Iterable<Item>
-    {
+    {  // oldest(first)-->next-->next-->newest(last)-->null
         private Node first; // link to least recently added node
         private Node last; // link to most recently added node
         private int N; // number of items on the queue
@@ -163,23 +161,24 @@ public class Lab4Question2
 
     public static void main(String[] args) throws IOException
     {
-        Scanner in = new Scanner(new File("Text.txt"));
-        Lab4Question2 lab = new Lab4Question2();
-        int limit = 49;
-        String[] indexName = new String[limit];
-        Lab4Question2.Graph graph = lab.new Graph(limit);
-        int count = 0;
-        int count2 = 0;
-        int counter = 0;
-        int state1 = 0;
-        int state2 = 0;
+        Scanner in = new Scanner(new File("Text.txt"));  //input file
+        Lab4Question2 lab = new Lab4Question2();  //instantiate class
+        int limit = 49;  //limit of input for array
+        String[] indexName = new String[limit];  //array of states with index as input (symbol table)
+        Lab4Question2.Graph graph = lab.new Graph(limit);  //instantiate inner class
+        int count = 0;  //left input marker
+        int count2 = 0;  //right input marker
+        int counter = 0;  //array counter
+        int state1 = 0;  //int for the left input state
+        int state2 = 0;  //int for the right input state
 
         while (in.hasNext())
         {
             String[] inputs = in.nextLine().split(" ");
+
             for (int i = 0; i < indexName.length; i++)
             {
-                if (inputs[0].equals(indexName[i]))
+                if (inputs[0].equals(indexName[i]))  //checks for duplicate
                 {
                     count++;
                 }
@@ -188,7 +187,8 @@ public class Lab4Question2
                     count2++;
                 }
             }
-            if (count == 0)
+
+            if (count == 0)  //if unique put into array
             {
                 indexName[counter] = inputs[0];
                 //state1 = counter;
@@ -203,7 +203,7 @@ public class Lab4Question2
             count2 = 0;
             count = 0;
 
-            for (int i = 0; i < counter; i++)
+            for (int i = 0; i < counter; i++)  //finds index with corresponding name
             {
                 if (inputs[0].equals(indexName[i]))
                 {
@@ -215,27 +215,27 @@ public class Lab4Question2
                 }
             }
 
-            graph.addEdge(state1, state2);
+            graph.addEdge(state1, state2);  //put into graph
         }
 
         Iterable[] iter = new Iterable[limit];
         int edgeCounter = 0;
         int stateCounter = 0;
 
-        for (int i = 0; i < limit; i++)
+        for (int i = 0; i < limit; i++)  //gets all of the adjacency list
         {
             iter[i] = graph.adj(i);
         }
 
-        for (Iterable i : iter)
+        for (Iterable i : iter)  //for each adjacency list
         {
             out.println("Borders of: " + indexName[stateCounter]);
-            for (Object j : i)
+            for (Object j : i)  //for each nodes in adjacency list
             {
                 //out.println(j.toString());
                 //out.println(indexName[Integer.getInteger(j.toString())]);
 
-                out.println(indexName[(Integer) (j)]);
+                out.println(indexName[(Integer) (j)]);  //symbol table conversion
                 edgeCounter++;
             }
             stateCounter++;
@@ -252,7 +252,7 @@ public class Lab4Question2
         String input = sc.nextLine();
         String[] inputSplit = input.split(" ");
 
-        for (int i = 0; i < limit; i++)
+        for (int i = 0; i < limit; i++)  //finds input in state index and finds corresponding number
         {
             if (inputSplit[0].equals(indexName[i]))
             {
