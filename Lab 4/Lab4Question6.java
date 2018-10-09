@@ -7,12 +7,12 @@ import static java.lang.System.out;
 public class Lab4Question6
 {
     public class Bag<Item> implements Iterable<Item>
-    {
+    {  //puts stuff in and can only iterate through, it works like a linked list
         private Node first; // first node in list
-        private class Node
+        private class Node  // uses node to store items in bag
         {
-            Item item;
-            Node next;
+            Item item;  // stores the item
+            Node next;  // what the next item is so it can iterate
         }
         public void add(Item item)
         { // same as push() in Stack
@@ -21,9 +21,9 @@ public class Lab4Question6
             first.item = item;
             first.next = oldfirst;
         }
-        public Iterator<Item> iterator()
+        public Iterator<Item> iterator()  //basic iterator
         { return new ListIterator(); }
-        private class ListIterator implements Iterator<Item>
+        private class ListIterator implements Iterator<Item>  //specific iterator for this type
         {
             private Node current = first;
             public boolean hasNext()
@@ -39,28 +39,28 @@ public class Lab4Question6
     }
 
     public class Digraph
-    {
+    {  //directed graph
         private final int V;
         private int E;
-        private Bag<Integer>[] adj;
-        public Digraph(int V)
+        private Bag<Integer>[] adj;  // bag of integers for adjacent linking
+        public Digraph(int V)  //constructor
         {
             this.V = V;
             this.E = 0;
-            adj = (Bag<Integer>[]) new Bag[V];
+            adj = (Bag<Integer>[]) new Bag[V];  //creates an array of bags for adjacency list
             for (int v = 0; v < V; v++)
-                adj[v] = new Bag<Integer>();
+                adj[v] = new Bag<Integer>();  //fills each array with an empty bag
         }
         public int V() { return V; }
         public int E() { return E; }
-        public void addEdge(int v, int w)
+        public void addEdge(int v, int w)  //adds a directed edge
         {
             adj[v].add(w);
             E++;
         }
         public Iterable<Integer> adj(int v)
         { return adj[v]; }
-        public Digraph reverse()
+        public Digraph reverse()  //reverses all of the edges and returns that graph
         {
             Digraph R = new Digraph(V);
             for (int v = 0; v < V; v++)
@@ -71,7 +71,7 @@ public class Lab4Question6
     }
 
     public class Stack<Item> implements Iterable<Item>
-    {
+    {  //newest(first)-->next-->next-->null
         private Node first; // top of stack (most recently added node)
         private int N; // number of items
         private class Node
@@ -116,13 +116,13 @@ public class Lab4Question6
 // See page 147 for test client main().
     }
 
-    public class DirectedCycle
+    public class DirectedCycle  //checks if it has a cycle
     {
         private boolean[] marked;
         private int[] edgeTo;
         private Stack<Integer> cycle; // vertices on a cycle (if one exists)
         private boolean[] onStack; // vertices on recursive call stack
-        public DirectedCycle(Digraph G)
+        public DirectedCycle(Digraph G)  //takes in a graph
         {
             onStack = new boolean[G.V()];
             edgeTo = new int[G.V()];
@@ -132,19 +132,19 @@ public class Lab4Question6
         }
         private void dfs(Digraph G, int v)
         {
-            onStack[v] = true;
-            marked[v] = true;
-            for (int w : G.adj(v))
-                if (this.hasCycle()) return;
-                else if (!marked[w])
-                { edgeTo[w] = v; dfs(G, w); }
-                else if (onStack[w])
+            onStack[v] = true;  //to check if it needs to be checked
+            marked[v] = true;  //if already been there
+            for (int w : G.adj(v))  //go through adjacency
+                if (this.hasCycle()) return;  //ends it early if cycle detected
+                else if (!marked[w])  //if not been there
+                { edgeTo[w] = v; dfs(G, w); }  //recursive
+                else if (onStack[w])  //if to be checked means there is a cycle
                 {
                     cycle = new Stack<Integer>();
-                    for (int x = v; x != w; x = edgeTo[x])
+                    for (int x = v; x != w; x = edgeTo[x])  //push it backwards
                         cycle.push(x);
-                    cycle.push(w);
-                    cycle.push(v);
+                    cycle.push(w);  //push the "origin"
+                    cycle.push(v);  //push the "last" to show cycle
                 }
             onStack[v] = false;
         }

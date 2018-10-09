@@ -8,7 +8,7 @@ import static java.lang.System.out;
 public class Lab4Question1
 {
     public class Bag<Item> implements Iterable<Item>
-    {
+    {  //puts stuff in and can only iterate through, it works like a linked list
         private Node first; // first node in list
         private class Node  // uses node to store items in bag
         {

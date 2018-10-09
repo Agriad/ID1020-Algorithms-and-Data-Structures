@@ -283,6 +283,9 @@ public class Lab4Question3
             int temp2 = pq[place];
             pq[place] = pq[n];
             pq[n] = temp2;
+            Key temp3 = keys[place];
+            keys[place] = keys[n];
+            keys[n] = temp3;
         }
 
         private void sink(int n)
@@ -294,6 +297,9 @@ public class Lab4Question3
             int temp2 = pq[place];
             pq[place] = pq[n];
             pq[n] = temp2;
+            Key temp3 = keys[place];
+            keys[place] = keys[n];
+            keys[n] = temp3;
         }
 
         private void exch(int i, int j)

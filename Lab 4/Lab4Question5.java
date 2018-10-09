@@ -40,10 +40,10 @@ public class Lab4Question5
     }
 
     public class Digraph
-    {
+    {  //directed graph
         private final int V;
         private int E;
-        private Bag<Integer>[] adj;
+        private Bag<Integer>[] adj;  // bag of integers for adjacent linking
         public Digraph(int V)  //constructor
         {
             this.V = V;
@@ -72,7 +72,7 @@ public class Lab4Question5
     }
 
     public class Queue<Item> implements Iterable<Item>
-    {
+    {  // oldest(first)-->next-->next-->newest(last)-->null
         private Node first; // link to least recently added node
         private Node last; // link to most recently added node
         private int N; // number of items on the queue
