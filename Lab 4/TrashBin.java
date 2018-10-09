@@ -143,3 +143,35 @@ public void GraphIn(String in)
         addEdge(v, w); // and add edge connecting them.
         }
         }*/
+
+/*
+/*
+    public class Graph
+    {
+        private final int V; // number of vertices
+        private int E; // number of edges
+        private Bag<EdgeWeight>[] adj; // adjacency lists
+        public Graph(int V)
+        {
+            this.V = V; this.E = 0;
+            adj = (Bag<EdgeWeight>[]) new Bag[V]; // Create array of lists.
+            for (int v = 0; v < V; v++) // Initialize all lists
+            {
+                adj[v] = new Bag<EdgeWeight>(); // to empty.
+            }
+        }
+
+        public int V() { return V; }
+        public int E() { return E; }
+
+        public void addEdge(int v, int w, int weight)
+        {
+            EdgeWeight weightV = new EdgeWeight(v, w, weight);
+            EdgeWeight weightW = new EdgeWeight(w, v, weight);
+            adj[v].add(weightV); // Add w to v’s list.
+            adj[w].add(weightW); // Add v to w’s list.
+            E++;
+        }
+        public Iterable<EdgeWeight> adj(int v)
+        { return adj[v]; }
+    }*/

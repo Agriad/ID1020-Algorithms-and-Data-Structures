@@ -10,10 +10,10 @@ public class Lab4Question3
     public class Bag<Item> implements Iterable<Item>
     {
         private Node first; // first node in list
-        private class Node
+        private class Node  // uses node to store items in bag
         {
-            Item item;
-            Node next;
+            Item item;  // stores the item
+            Node next;  // what the next item is so it can iterate
         }
         public void add(Item item)
         { // same as push() in Stack
@@ -22,9 +22,9 @@ public class Lab4Question3
             first.item = item;
             first.next = oldfirst;
         }
-        public Iterator<Item> iterator()
+        public Iterator<Item> iterator()  //basic iterator
         { return new ListIterator(); }
-        private class ListIterator implements Iterator<Item>
+        private class ListIterator implements Iterator<Item>  //specific iterator for this type
         {
             private Node current = first;
             public boolean hasNext()
@@ -41,11 +41,11 @@ public class Lab4Question3
 
     public class EdgeWeight
     {
-        private int v;
-        private int w;
-        private int weight;
+        private int v;  //node v
+        private int w;  //node w
+        private double weight;  //weight of the connection
 
-        public EdgeWeight(int v, int w, int weight)
+        public EdgeWeight(int v, int w, double weight)  //constructor
         {
             this.v = v;
             this.w = w;
@@ -62,9 +62,19 @@ public class Lab4Question3
             return (this.w);
         }
 
-        public int weight()
+        public double weight()
         {
             return (weight);
+        }
+
+        public int either()
+        { return v; }
+
+        public int other(int vertex)
+        {
+            if (vertex == v) return w;
+            else if (vertex == w) return v;
+            else throw new RuntimeException("Inconsistent edge");
         }
     }
 
@@ -78,7 +88,9 @@ public class Lab4Question3
             this.V = V; this.E = 0;
             adj = (Bag<EdgeWeight>[]) new Bag[V]; // Create array of lists.
             for (int v = 0; v < V; v++) // Initialize all lists
+            {
                 adj[v] = new Bag<EdgeWeight>(); // to empty.
+            }
         }
 
         public int V() { return V; }
@@ -86,17 +98,19 @@ public class Lab4Question3
 
         public void addEdge(int v, int w, int weight)
         {
-            EdgeWeight ew = new EdgeWeight(v, w, weight);
-            adj[v].add(ew); // Add w to v’s list.
-            adj[w].add(ew); // Add v to w’s list.
+            EdgeWeight vwWeight = new EdgeWeight(v, w, weight);
+            EdgeWeight wvWeight = new EdgeWeight(v, w, weight);
+            adj[v].add(vwWeight); // Add w to v’s list.
+            adj[w].add(wvWeight); // Add v to w’s list.
             E++;
         }
+
         public Iterable<EdgeWeight> adj(int v)
         { return adj[v]; }
     }
 
     public class Queue<Item> implements Iterable<Item>
-    {
+    {  // oldest(first)-->next-->next-->newest(last)-->null
         private Node first; // link to least recently added node
         private Node last; // link to most recently added node
         private int N; // number of items on the queue
@@ -145,6 +159,53 @@ public class Lab4Question3
 // See page 150 for test client main().
     }
 
+    public class Stack<Item> implements Iterable<Item>
+    {  //newest(first)-->next-->next-->null
+        private Node first; // top of stack (most recently added node)
+        private int N; // number of items
+        private class Node
+        { // nested class to define nodes
+            Item item;
+            Node next;
+        }
+        public boolean isEmpty() { return first == null; } // Or: N == 0.
+        public int size() { return N; }
+        public void push(Item item)
+        { // Add item to top of stack.
+            Node oldfirst = first;
+            first = new Node();
+            first.item = item;
+            first.next = oldfirst;
+            N++;
+        }
+        public Item pop()
+        { // Remove item from top of stack.
+            Item item = first.item;
+            first = first.next;
+            N--;
+            return item;
+        }
+
+        public Iterator<Item> iterator()  //basic iterator
+        { return new ListIterator(); }
+        private class ListIterator implements Iterator<Item>  //specific iterator for this type
+        {
+            private Node current = first;
+            public boolean hasNext()
+            { return current != null; }
+            public void remove() { }
+            public Item next()
+            {
+                Item item = current.item;
+                current = current.next;
+                return item;
+            }
+        }
+// See page 155 for iterator() implementation.
+// See page 147 for test client main().
+    }
+
+    /*
     public class BreadthFirstPaths
     {
         private boolean[] marked; // Is a shortest path to this vertex known?
@@ -162,16 +223,15 @@ public class Lab4Question3
             Queue<Integer> queue = new Queue<Integer>();
             marked[s] = true; // Mark the source
             queue.enqueue(s); // and put it on the queue.
-            Integer wNum;
             while (!queue.isEmpty())
             {
                 int v = queue.dequeue(); // Remove next vertex from the queue.
                 for (EdgeWeight w : G.adj(v))
-                    if (!marked[wNum = w.w()]) // For every unmarked adjacent vertex,
+                    if (!marked[w.w()]) // For every unmarked adjacent vertex,
                     {
-                        edgeTo[wNum] = v; // save last edge on a shortest path,
-                        marked[wNum] = true; // mark it because path is known,
-                        queue.enqueue(wNum); // and add it to the queue.
+                        edgeTo[w.w()] = v; // save last edge on a shortest path,
+                        marked[w.w()] = true; // mark it because path is known,
+                        queue.enqueue(w.w()); // and add it to the queue.
                     }
             }
         }
@@ -188,20 +248,167 @@ public class Lab4Question3
             return path;
         }
 // Same as for DFS (see page 536).
+    }*/
+
+    public class IndexMinPQ<Key extends Comparable<Key>>
+    {
+        private int N; // number of elements on PQ
+        private int[] pq; // binary heap using 1-based indexing.
+        private int[] qp; // inverse: qp[pq[i]] = pq[qp[i]] = i. priority with left being smallest
+        private Key[] keys; // items with priorities
+
+        public IndexMinPQ(int maxN) {
+            keys = (Key[]) new Comparable[maxN + 1];
+            pq = new int[maxN + 1];
+            qp = new int[maxN + 1];
+            for (int i = 0; i <= maxN; i++) qp[i] = -1;  //makes it "zero"
+        }
+
+        public boolean isEmpty()
+        {
+            return N == 0;
+        }
+
+        public boolean contains(int k)
+        {
+            return qp[k] != -1;
+        }
+
+        private void swim(int n)
+        {
+            int place = n/2;
+            int temp1 = qp[place];
+            qp[place] = qp[n];
+            qp[n] = temp1;
+            int temp2 = pq[place];
+            pq[place] = pq[n];
+            pq[n] = temp2;
+        }
+
+        private void sink(int n)
+        {
+            int place = n*2;
+            int temp1 = qp[place];
+            qp[place] = qp[n];
+            qp[n] = temp1;
+            int temp2 = pq[place];
+            pq[place] = pq[n];
+            pq[n] = temp2;
+        }
+
+        private void exch(int i, int j)
+        {
+            int temp = qp[i];
+            int temp1 = pq[i];
+            Key temp2 = keys[i];
+            qp[i] = qp[j];
+            pq[i] = pq[j];
+            keys[i] = keys[j];
+            pq[j] = temp;
+            qp[j] = temp1;
+            keys[j] = temp2;
+        }
+
+        public void insert(int k, Key key)
+        {
+            N++;
+            qp[k] = N;
+            pq[N] = k;
+            keys[k] = key;
+            swim(N);
+        }
+
+        public Key min()
+        {
+            return keys[pq[1]];
+        }
+
+        public void change(int i, Key d)
+        {
+            keys[i] = d;
+        }
+
+        public int delMin() {
+            int indexOfMin = pq[1];
+            exch(1, N--);
+            sink(1);
+            keys[pq[N + 1]] = null;
+            qp[pq[N + 1]] = -1;
+            return indexOfMin;
+        }
+    }
+
+    public class DijkstraSP
+    {
+        private EdgeWeight[] edgeTo;
+        private double[] distTo;
+        private IndexMinPQ<Double> pq;
+        public DijkstraSP(Graph G, int s)
+        {
+            edgeTo = new EdgeWeight[G.V()];
+            distTo = new double[G.V()];
+            pq = new IndexMinPQ<Double>(G.V());
+            for (int v = 0; v < G.V(); v++)
+                distTo[v] = Double.POSITIVE_INFINITY;
+            distTo[s] = 0.0;
+            pq.insert(s, 0.0);
+            while (!pq.isEmpty())
+                relax(G, pq.delMin());
+        }
+        private void relax(Graph G, int v)
+        {
+            for(EdgeWeight e : G.adj(v))
+            {
+                int w = e.other(v);
+                if (distTo[w] > distTo[v] + e.weight())
+                {
+                    distTo[w] = distTo[v] + e.weight();
+                    edgeTo[w] = e;
+                    if (pq.contains(w)) pq.change(w, distTo[w]);
+                    else pq.insert(w, distTo[w]);
+                }
+            }
+        }
+
+        //public double distTo(int v) // standard client query methods
+        public boolean hasPathTo(int v) // for SPT implementatations
+        {
+            if (edgeTo[v] == null)
+            {
+                return (false);
+            }
+            else
+            {
+                return (true);
+            }
+        }
+        public Iterable<EdgeWeight> pathTo(int v) // (See page 649.)
+        {
+            if (!hasPathTo(v))
+            {
+                return (null);
+            }
+            Stack<EdgeWeight> path = new Stack<>();
+            for (EdgeWeight x = edgeTo[v]; x != null; x = edgeTo[x.either()])
+            {
+                path.push(x);
+            }
+            return (path);
+        }
     }
 
     public static void main(String[] args) throws IOException
     {
-        Scanner in = new Scanner(new File("Text.txt"));
-        Lab4Question3 lab = new Lab4Question3();
-        int limit = 49;
-        String[] indexName = new String[limit];
-        Lab4Question3.Graph graph = lab.new Graph(limit);
-        int count = 0;
-        int count2 = 0;
-        int counter = 0;
-        int state1 = 0;
-        int state2 = 0;
+        Scanner in = new Scanner(new File("Text.txt"));  //input file
+        Lab4Question3 lab = new Lab4Question3();  //instantiate class
+        int limit = 49;  //limit of input for array
+        String[] indexName = new String[limit];  //array of states with index as input (symbol table)
+        Lab4Question3.Graph graph = lab.new Graph(limit);  //instantiate inner class
+        int count = 0;  //left input marker
+        int count2 = 0;  //right input marker
+        int counter = 0;  //array counter
+        int state1 = 0;  //int for the left input state
+        int state2 = 0;  //int for the right input state
         int weight = 1;
 
         while (in.hasNext())
@@ -263,9 +470,12 @@ public class Lab4Question3
             out.println("Borders of: " + indexName[stateCounter]);
             for (Object j : i)
             {
-                //out.println(j.toString());
-                //out.println(indexName[Integer.getInteger(j.toString())]);
-                out.println(indexName[(Integer) (j)]);
+                Integer k = ((EdgeWeight) j).w();
+                if (k == stateCounter)
+                {
+                    k = ((EdgeWeight) j).v();
+                }
+                out.println(indexName[k]);
                 edgeCounter++;
             }
             stateCounter++;
@@ -294,9 +504,12 @@ public class Lab4Question3
             }
         }
 
-        Lab4Question3.BreadthFirstPaths bfp = lab.new BreadthFirstPaths(graph, state1);
+        //Lab4Question3.BreadthFirstPaths bfp = lab.new BreadthFirstPaths(graph, state1);
 
-        Iterable path = bfp.pathTo(state2);
+        //Iterable path = bfp.pathTo(state2);
+        Lab4Question3.DijkstraSP dsp = lab.new DijkstraSP(graph, state1);
+
+        Iterable path = dsp.pathTo(state2);
 
         for (Object i : path)
         {
