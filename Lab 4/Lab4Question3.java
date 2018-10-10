@@ -250,97 +250,168 @@ public class Lab4Question3
 // Same as for DFS (see page 536).
     }*/
 
-    public class IndexMinPQ<Key extends Comparable<Key>>
+    class NodeS
     {
-        private int N; // number of elements on PQ
-        private int[] pq; // binary heap using 1-based indexing.
-        private int[] qp; // inverse: qp[pq[i]] = pq[qp[i]] = i. priority with left being smallest
-        private Key[] keys; // items with priorities
+        private int number;
+        private double length;
+        private NodeS next;
+        private NodeS before;
 
-        public IndexMinPQ(int maxN) {
-            keys = (Key[]) new Comparable[maxN + 1];
-            pq = new int[maxN + 1];
-            qp = new int[maxN + 1];
-            for (int i = 0; i <= maxN; i++) qp[i] = -1;  //makes it "zero"
+        public NodeS(int num, double len)
+        {
+            this.number = num;
+            this.length = len;
+        }
+
+        public NodeS(NodeS before, NodeS next)  //ignore
+        {
+            this.before = before;
+            this.next = next;
+        }
+
+        public void change(double len)
+        {
+            this.length = len;
+        }
+
+        public int number()
+        {
+            int n = this.number;
+            return (n);
+        }
+
+        public double length()
+        {
+            double d = this.length;
+            return (d);
+        }
+
+        public NodeS next()
+        {
+            return (this.next);
+        }
+    }
+
+    public class IndexMinPQ//<Key extends Comparable<Key>>
+    {
+        private NodeS[] nodeArr = new NodeS[100];
+        private int size = 0;
+
+        public void resize()
+        {
+            int newSize = nodeArr.length * 2;
+            NodeS[] newNodeArr = new NodeS[newSize];
+
+            for (int i = 0; i < nodeArr.length; i++)
+            {
+                newNodeArr[i] = nodeArr[i];
+            }
+        }
+
+        public void insert(int s, double d)
+        {
+            if (size > (nodeArr.length / 2))
+            {
+                resize();
+            }
+
+            for (int i = 0; i < nodeArr.length; i++)
+            {
+                if (nodeArr[i] == null)
+                {
+                    NodeS n = new NodeS(s, d);
+                    nodeArr[i] = n;
+                    break;
+                }
+            }
+
+            size++;
+            sort();
         }
 
         public boolean isEmpty()
         {
-            return N == 0;
+            for (int i = 0; i < nodeArr.length; i++)
+            {
+                if (nodeArr[i] != null)
+                {
+                    return (false);
+                }
+            }
+            return (true);
         }
 
-        public boolean contains(int k)
+        public int delMin()
         {
-            return qp[k] != -1;
+            NodeS temp = nodeArr[0];
+            for (int i = 0; i < size; i++)
+            {
+                nodeArr[i] = nodeArr[i + 1];
+            }
+            sort();
+            return (temp.number());
         }
 
-        private void swim(int n)
+        public void sort()
         {
-            int place = n/2;
-            int temp1 = qp[place];
-            qp[place] = qp[n];
-            qp[n] = temp1;
-            int temp2 = pq[place];
-            pq[place] = pq[n];
-            pq[n] = temp2;
-            Key temp3 = keys[place];
-            keys[place] = keys[n];
-            keys[n] = temp3;
+            double min = 0;
+            if (null != nodeArr[0])
+            {
+                min = ((NodeS) nodeArr[0]).length();
+            }
+            //double min = ((NodeS) nodeArr[0]).length();
+            int location = 0;
+
+            for (int i = 0; i < nodeArr.length; i++)
+            {
+                NodeS check = nodeArr[i];
+                if (check != null)
+                {
+                    double compare = ((NodeS) nodeArr[i]).length();
+
+                    if (min > compare)
+                    {
+                        location = i;
+                    }
+                }
+            }
+
+            NodeS temp = nodeArr[0];
+            nodeArr[0] = nodeArr[location];
+            nodeArr[location] = temp;
         }
 
-        private void sink(int n)
+        public boolean contains(int n)
         {
-            int place = n*2;
-            int temp1 = qp[place];
-            qp[place] = qp[n];
-            qp[n] = temp1;
-            int temp2 = pq[place];
-            pq[place] = pq[n];
-            pq[n] = temp2;
-            Key temp3 = keys[place];
-            keys[place] = keys[n];
-            keys[n] = temp3;
+            for (int i = 0; i < nodeArr.length; i++)
+            {
+                NodeS temp = nodeArr[i];
+                if(null == temp)
+                {
+                    continue;
+                }
+                else if (n == temp.number())
+                {
+                    return (true);
+                }
+            }
+            return (false);
         }
 
-        private void exch(int i, int j)
+        public void change(int n , double d)
         {
-            int temp = qp[i];
-            int temp1 = pq[i];
-            Key temp2 = keys[i];
-            qp[i] = qp[j];
-            pq[i] = pq[j];
-            keys[i] = keys[j];
-            pq[j] = temp;
-            qp[j] = temp1;
-            keys[j] = temp2;
-        }
-
-        public void insert(int k, Key key)
-        {
-            N++;
-            qp[k] = N;
-            pq[N] = k;
-            keys[k] = key;
-            swim(N);
-        }
-
-        public Key min()
-        {
-            return keys[pq[1]];
-        }
-
-        public void change(int i, Key d)
-        {
-            keys[i] = d;
-        }
-
-        public int delMin() {
-            int indexOfMin = pq[1];
-            exch(1, N--);
-            sink(1);
-            keys[pq[N + 1]] = null;
-            qp[pq[N + 1]] = -1;
-            return indexOfMin;
+            for (int i = 0; i < nodeArr.length; i++)
+            {
+                NodeS temp = nodeArr[i];
+                if(null == temp)
+                {
+                    continue;
+                }
+                else if (n == temp.number())
+                {
+                    temp.change(d);
+                }
+            }
         }
     }
 
@@ -348,12 +419,14 @@ public class Lab4Question3
     {
         private EdgeWeight[] edgeTo;
         private double[] distTo;
-        private IndexMinPQ<Double> pq;
+        //private IndexMinPQ<Double> pq;
+        private IndexMinPQ pq;
         public DijkstraSP(Graph G, int s)
         {
             edgeTo = new EdgeWeight[G.V()];
             distTo = new double[G.V()];
-            pq = new IndexMinPQ<Double>(G.V());
+            //pq = new IndexMinPQ<Double>(G.V());
+            pq = new IndexMinPQ();
             for (int v = 0; v < G.V(); v++)
                 distTo[v] = Double.POSITIVE_INFINITY;
             distTo[s] = 0.0;

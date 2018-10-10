@@ -5,6 +5,11 @@ import java.util.Iterator;
 
 import static java.lang.System.out;
 
+/*README
+Takes in input file of the states in the united states and makes it an undirected graph.
+Uses breadth first search to find a path which is also one of the shortest path.
+ */
+
 public class Lab4Question2
 {
     public class Bag<Item> implements Iterable<Item>

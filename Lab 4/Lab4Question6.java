@@ -4,6 +4,11 @@ import java.util.Iterator;
 import java.util.Scanner;
 import static java.lang.System.out;
 
+/*README
+Takes in input file of the states in the united states and makes it a directed graph.
+Finds if this graph is acyclic or not.
+ */
+
 public class Lab4Question6
 {
     public class Bag<Item> implements Iterable<Item>

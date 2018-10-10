@@ -4,6 +4,11 @@ import java.util.Iterator;
 import java.util.Scanner;
 import static java.lang.System.out;
 
+/*README
+Takes in input file of the small database and makes it a directed graph.
+Finds if this graph is acyclic or not and then sorts it topologically.
+ */
+
 public class Lab4Question7
 {
     public class Bag<Item> implements Iterable<Item>

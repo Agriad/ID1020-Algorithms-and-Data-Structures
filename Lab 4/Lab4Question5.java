@@ -5,6 +5,11 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
+/*README
+Takes in input file of the states in the united states and makes it a directed graph.
+Uses breadth first path to check if there is a path between 2 states
+ */
+
 public class Lab4Question5
 {
     public class Bag<Item> implements Iterable<Item>

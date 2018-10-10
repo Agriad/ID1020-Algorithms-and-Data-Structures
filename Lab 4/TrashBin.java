@@ -175,3 +175,96 @@ public void GraphIn(String in)
         public Iterable<EdgeWeight> adj(int v)
         { return adj[v]; }
     }*/
+
+/*
+private int N; // number of elements on PQ
+        private int[] pq; // binary heap using 1-based indexing.
+        private int[] qp; // inverse: qp[pq[i]] = pq[qp[i]] = i. priority with left being smallest
+        private Key[] keys; // items with priorities
+
+        public IndexMinPQ(int maxN) {
+            keys = (Key[]) new Comparable[maxN + 1];
+            pq = new int[maxN + 1];
+            qp = new int[maxN + 1];
+            for (int i = 0; i <= maxN; i++) qp[i] = -1;  //makes it "zero"
+        }
+
+        public boolean isEmpty()
+        {
+            return N == 0;
+        }
+
+        public boolean contains(int k)
+        {
+            return qp[k] != -1;
+        }
+
+        private void swim(int n)
+        {
+            int place = n/2;
+            int temp1 = qp[place];
+            qp[place] = qp[n];
+            qp[n] = temp1;
+            int temp2 = pq[place];
+            pq[place] = pq[n];
+            pq[n] = temp2;
+            Key temp3 = keys[place];
+            keys[place] = keys[n];
+            keys[n] = temp3;
+        }
+
+        private void sink(int n)
+        {
+            int place = n*2;
+            int temp1 = qp[place];
+            qp[place] = qp[n];
+            qp[n] = temp1;
+            int temp2 = pq[place];
+            pq[place] = pq[n];
+            pq[n] = temp2;
+            Key temp3 = keys[place];
+            keys[place] = keys[n];
+            keys[n] = temp3;
+        }
+
+        private void exch(int i, int j)
+        {
+            int temp = qp[i];
+            int temp1 = pq[i];
+            Key temp2 = keys[i];
+            qp[i] = qp[j];
+            pq[i] = pq[j];
+            keys[i] = keys[j];
+            pq[j] = temp;
+            qp[j] = temp1;
+            keys[j] = temp2;
+        }
+
+        public void insert(int k, Key key)
+        {
+            N++;
+            qp[k] = N;
+            pq[N] = k;
+            keys[k] = key;
+            swim(N);
+        }
+
+        public Key min()
+        {
+            return keys[pq[1]];
+        }
+
+        public void change(int i, Key d)
+        {
+            keys[i] = d;
+        }
+
+        public int delMin() {
+            int indexOfMin = pq[1];
+            exch(1, N--);
+            sink(1);
+            keys[pq[N + 1]] = null;
+            qp[pq[N + 1]] = -1;
+            return indexOfMin;
+        }
+ */
