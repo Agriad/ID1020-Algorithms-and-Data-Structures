@@ -64,6 +64,7 @@ public class Lab4Question3
 
         public double weight()
         {
+            System.out.println("weight");
             return (weight);
         }
 
@@ -205,213 +206,214 @@ public class Lab4Question3
 // See page 147 for test client main().
     }
 
-    /*
-    public class BreadthFirstPaths
+    public class IndexMinPQ//<Item> //Question 3
     {
-        private boolean[] marked; // Is a shortest path to this vertex known?
-        private int[] edgeTo; // last vertex on known path to this vertex
-        private final int s; // source
-        public BreadthFirstPaths(Graph G, int s)
-        {
-            marked = new boolean[G.V()];
-            edgeTo = new int[G.V()];
-            this.s = s;
-            bfs(G, s);
-        }
-        private void bfs(Graph G, int s)
-        {
-            Queue<Integer> queue = new Queue<Integer>();
-            marked[s] = true; // Mark the source
-            queue.enqueue(s); // and put it on the queue.
-            while (!queue.isEmpty())
-            {
-                int v = queue.dequeue(); // Remove next vertex from the queue.
-                for (EdgeWeight w : G.adj(v))
-                    if (!marked[w.w()]) // For every unmarked adjacent vertex,
-                    {
-                        edgeTo[w.w()] = v; // save last edge on a shortest path,
-                        marked[w.w()] = true; // mark it because path is known,
-                        queue.enqueue(w.w()); // and add it to the queue.
-                    }
-            }
-        }
-        public boolean hasPathTo(int v)
-        { return marked[v]; }
-
-        public Iterable<Integer> pathTo(int v)
-        {
-            if (!hasPathTo(v)) return null;
-            Queue<Integer> path = new Queue<Integer>();
-            for (int x = v; x != s; x = edgeTo[x])
-                path.enqueue(x);
-            path.enqueue(s);
-            return path;
-        }
-// Same as for DFS (see page 536).
-    }*/
-
-    class NodeS
-    {
-        private int number;
-        private double length;
-        private NodeS next;
-        private NodeS before;
-
-        public NodeS(int num, double len)
-        {
-            this.number = num;
-            this.length = len;
-        }
-
-        public NodeS(NodeS before, NodeS next)  //ignore
-        {
-            this.before = before;
-            this.next = next;
-        }
-
-        public void change(double len)
-        {
-            this.length = len;
-        }
-
-        public int number()
-        {
-            int n = this.number;
-            return (n);
-        }
-
-        public double length()
-        {
-            double d = this.length;
-            return (d);
-        }
-
-        public NodeS next()
-        {
-            return (this.next);
-        }
-    }
-
-    public class IndexMinPQ//<Key extends Comparable<Key>>
-    {
-        private NodeS[] nodeArr = new NodeS[100];
+        //structure:  null<--1<-->2<-->3-->null
+        //where 1 is the smallest data entered and 3 is the largest
+        private Node first = null;  //smallest value
+        private Node last = null;  //largest value
         private int size = 0;
 
-        public void resize()
-        {
-            int newSize = nodeArr.length * 2;
-            NodeS[] newNodeArr = new NodeS[newSize];
-
-            for (int i = 0; i < nodeArr.length; i++)
-            {
-                newNodeArr[i] = nodeArr[i];
-            }
+        private class Node {
+            //Item item = null;  //data storage
+            int item;
+            double distance;
+            Node next = null;  //pointer to the next node
+            Node before = null;  //pointer to the previous node
         }
 
-        public void insert(int s, double d)
+        public boolean isEmpty()  //checks, if first == null, true else false
         {
-            if (size > (nodeArr.length / 2))
-            {
-                resize();
-            }
+            return (first == null);
+        }
 
-            for (int i = 0; i < nodeArr.length; i++)
+        public void insert(int item, double length)  //adds the item to the "last" node and links it
+        {
+            System.out.println("insert insert");
+            Node temp = new Node();  //makes a new node for the new data
+            temp.item = item;
+            temp.distance = length;
+
+            if (size == 0)  //if empty add as first one
             {
-                if (nodeArr[i] == null)
+                last = temp;
+                first = last;
+                out.println("first");
+            }
+            else {
+                System.out.println("insert else");
+                Node pointer = last;
+                int check1 = (int) (item);
+                int check2 = (int) (pointer.item);
+
+                while ((check1 < check2) && (pointer.before != null))  //from last if the number added before if bigger go
+                {  //to the before node
+                    pointer = pointer.before;
+                }
+
+                if (pointer == first)  //if it is the largest make it first
                 {
-                    NodeS n = new NodeS(s, d);
-                    nodeArr[i] = n;
-                    break;
+                    pointer.before = temp;
+                    temp.next = pointer;
+                    first = temp;
+                } else if (pointer == last)  //if it is the smallest make it last
+                {
+                    pointer.next = temp;
+                    temp.before = pointer;
+                    last = temp;
+                } else  //splice it in between the 2 nodes
+                {
+                    pointer.next.before = temp;
+                    temp.next = pointer.next.before;
+                    pointer.next = temp;
+                    temp.before = pointer;
+
                 }
             }
 
             size++;
-            sort();
         }
 
-        public boolean isEmpty()
+        public int delMin()  //removes the node from the "first" node and returns the item
         {
-            for (int i = 0; i < nodeArr.length; i++)
+            int item = first.item;  //grabs item from the oldest entry
+            first = first.next;  //cycles it for the next call
+
+            Node pointer  = first;
+            while (pointer != null)
             {
-                if (nodeArr[i] != null)
+                if (pointer.item == item)
+                {
+                    break;
+                }
+                pointer = pointer.next;
+            }
+
+            if (pointer != null)
+            {
+                remove(pointer.item);
+            }
+
+            size--;
+            return (item);  //returns the data inside
+        }
+
+        public boolean contains(int item)
+        {
+            System.out.println("contains");
+            Node pointer  = first;
+            for (int i = 0; i < size; i++)
+            {
+                System.out.println("contains loop");
+                if (pointer == null)
                 {
                     return (false);
                 }
-            }
-            return (true);
-        }
-
-        public int delMin()
-        {
-            NodeS temp = nodeArr[0];
-            for (int i = 0; i < size; i++)
-            {
-                nodeArr[i] = nodeArr[i + 1];
-            }
-            sort();
-            return (temp.number());
-        }
-
-        public void sort()
-        {
-            double min = 0;
-            if (null != nodeArr[0])
-            {
-                min = ((NodeS) nodeArr[0]).length();
-            }
-            //double min = ((NodeS) nodeArr[0]).length();
-            int location = 0;
-
-            for (int i = 0; i < nodeArr.length; i++)
-            {
-                NodeS check = nodeArr[i];
-                if (check != null)
-                {
-                    double compare = ((NodeS) nodeArr[i]).length();
-
-                    if (min > compare)
-                    {
-                        location = i;
-                    }
-                }
-            }
-
-            NodeS temp = nodeArr[0];
-            nodeArr[0] = nodeArr[location];
-            nodeArr[location] = temp;
-        }
-
-        public boolean contains(int n)
-        {
-            for (int i = 0; i < nodeArr.length; i++)
-            {
-                NodeS temp = nodeArr[i];
-                if(null == temp)
-                {
-                    continue;
-                }
-                else if (n == temp.number())
+                if (pointer.item == item)
                 {
                     return (true);
                 }
+                pointer = pointer.next;
             }
             return (false);
+
+            /*
+            System.out.println("contains");
+            Node pointer  = first;
+            while (pointer != null)
+            {
+                System.out.println("contains loop");
+                if (pointer.item == item)
+                {
+                    return (true);
+                }
+                pointer = pointer.next;
+            }
+            return (false);*/
         }
 
-        public void change(int n , double d)
+        public void remove(int item)
         {
-            for (int i = 0; i < nodeArr.length; i++)
+            Node pointer  = first;
+            while (pointer != null)
             {
-                NodeS temp = nodeArr[i];
-                if(null == temp)
+                if (pointer.item == item)
                 {
-                    continue;
+                    break;
                 }
-                else if (n == temp.number())
-                {
-                    temp.change(d);
-                }
+                pointer = pointer.next;
             }
+
+            if (size == 1)
+            {
+                first = null;
+                last = null;
+                size--;
+            }
+            else if (size == 2)
+            {
+                if (pointer.next == null)
+                {
+                    last = pointer.before;
+                    pointer.before.next = null;
+                    pointer.before = null;
+                }
+                else
+                {
+                    first = pointer.next;
+                    pointer.next.before = null;
+                    pointer.next = null;
+                }
+                size--;
+            }
+            else if (pointer.before == null)
+            {
+                pointer.next = first;
+                pointer.next.before = null;
+                pointer.next = null;
+                size--;
+            }
+            else if (pointer.next == null)
+            {
+                pointer.before = last;
+                pointer.before.next = null;
+                pointer.before = null;
+                size--;
+            }
+            else
+            {
+                pointer.next.before = pointer.before.before;
+                pointer.before.next = pointer.next.next;
+                pointer.next = null;
+                pointer.before = null;
+                size--;
+            }
+        }
+
+        public void change(int item, double length)
+        {
+            remove(item);
+            insert(item, length);
+        }
+
+        public String toString()  //makes a String interpretation of the way the data is stored
+        {
+            String drawing = "";
+            Node pointer = first;
+            StringBuilder sb = new StringBuilder();
+
+            while (pointer != null)  //if a node exist
+            {
+                sb.append('[').append(pointer.item).append(']');  //adds the item
+                if (pointer.next != null) {
+                    sb.append(", ");
+                }
+                pointer = pointer.next;  //go to next node
+            }
+
+            drawing = sb.toString();
+
+            return (drawing);
         }
     }
 
@@ -432,44 +434,72 @@ public class Lab4Question3
             distTo[s] = 0.0;
             pq.insert(s, 0.0);
             while (!pq.isEmpty())
+            {
+                System.out.println("out");
                 relax(G, pq.delMin());
+            }
         }
         private void relax(Graph G, int v)
         {
             for(EdgeWeight e : G.adj(v))
             {
+                System.out.println("out1");
                 int w = e.other(v);
                 if (distTo[w] > distTo[v] + e.weight())
                 {
+                    System.out.println("inside if");
                     distTo[w] = distTo[v] + e.weight();
                     edgeTo[w] = e;
-                    if (pq.contains(w)) pq.change(w, distTo[w]);
-                    else pq.insert(w, distTo[w]);
+                    if (pq.contains(w))
+                    {
+                        System.out.println("change");
+                        pq.change(w, distTo[w]);
+                    }
+                    else
+                    {
+                        System.out.println("insert");
+                        pq.insert(w, distTo[w]);
+                    }
                 }
+
+                /*
+                w = e.either();
+                if (distTo[w] > distTo[v] + e.weight())
+                {
+                    System.out.println("inside if");
+                    distTo[w] = distTo[v] + e.weight();
+                    edgeTo[w] = e;
+                    if (pq.contains(w))
+                    {
+                        System.out.println("change");
+                        pq.change(w, distTo[w]);
+                    }
+                    else
+                    {
+                        System.out.println("insert");
+                        pq.insert(w, distTo[w]);
+                    }
+                }*/
             }
         }
 
         //public double distTo(int v) // standard client query methods
         public boolean hasPathTo(int v) // for SPT implementatations
         {
-            if (edgeTo[v] == null)
-            {
-                return (false);
-            }
-            else
-            {
-                return (true);
-            }
+            return distTo[v] < Double.POSITIVE_INFINITY;
         }
         public Iterable<EdgeWeight> pathTo(int v) // (See page 649.)
         {
+            System.out.println("path to");
             if (!hasPathTo(v))
             {
+                System.out.println("no path");
                 return (null);
             }
             Stack<EdgeWeight> path = new Stack<>();
             for (EdgeWeight x = edgeTo[v]; x != null; x = edgeTo[x.either()])
             {
+                System.out.println("putting stuff");
                 path.push(x);
             }
             return (path);
@@ -555,6 +585,7 @@ public class Lab4Question3
                     k = ((EdgeWeight) j).v();
                 }
                 out.println(indexName[k]);
+                out.println(((EdgeWeight) j).weight());
                 edgeCounter++;
             }
             stateCounter++;
@@ -590,9 +621,26 @@ public class Lab4Question3
 
         Iterable path = dsp.pathTo(state2);
 
-        for (Object i : path)
+        Lab4Question3.DijkstraSP dsp1 = lab.new DijkstraSP(graph, state2);
+
+        Iterable path1 = dsp1.pathTo(state1);
+        if (path == null)
         {
-            out.println(indexName[(Integer) (i)]);
+            for (Object i : path1)
+            {
+                EdgeWeight ew = (EdgeWeight) i;
+                out.println(indexName[ew.either()]);
+                out.println(indexName[ew.other(ew.either())]);
+            }
+        }
+        else
+        {
+            for (Object i : path)
+            {
+                EdgeWeight ew = (EdgeWeight) i;
+                out.println(indexName[ew.either()]);
+                out.println(indexName[ew.other(ew.either())]);
+            }
         }
 
     }
